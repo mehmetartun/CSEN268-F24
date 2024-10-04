@@ -1,4 +1,5 @@
 ## Santa Clara University - CSEN268 Fall 2024
-## Lecture 4 - 3 October 2024 
 
-Demonstrating Stateless Widget
+Each lecture is stored under a separate tag. In your computer do the following
+
+    asasdad
