@@ -1,3 +1,4 @@
+import 'package:CSEN268_F24/pages/user_list_page.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/my_home_page.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const UserListPage(),
     );
   }
 }
