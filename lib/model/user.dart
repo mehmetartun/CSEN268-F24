@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import '../services/mock.dart';
+
 class User {
   final String firstName;
   final String lastName;
@@ -55,6 +57,16 @@ class User {
 
   factory User.fromJson(String source) =>
       User.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  static User createMockUser() {
+    return User(
+      firstName: Mock.firstName(),
+      lastName: Mock.lastName(),
+      email: Mock.email(),
+      imageUrl: Mock.imageUrl(),
+      uid: Mock.uid(),
+    );
+  }
 
   @override
   String toString() {

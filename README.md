@@ -1,68 +1,52 @@
 ## Santa Clara University - CSEN268 Fall 2024
 
-### Lecture 5 - 8 Oct 2024
+### Lecture 6 - 10 Oct 2024
 
-In this lecture we will look at layout elements but to be able to do that we need widgets to fill the screen and using various packages we will create random objects. 
+#### Fix Flutter Lorem issue
 
-#### Lorem package
+In the previous lecture we installed the `flutter_lorem` package to create 
+random text from the famous **Lorem Ipsum**. We used this package where we 
+created 1 paragraph 1 word sentences. The downside was that it created text 
+with a punctuation at the end.
 
-For this we will utilize a package called `flutter_lorem` to generate placeholder text in our application while we are preparing the UI. In your terminal at the root directory of your project do the following to add the package to your project:
+We need to modify the result to remove the final punctuation mark.
 
-    flutter pub add flutter_lorem
+#### Create Mock class
 
-#### Math library
+The `Mock` class will be created to generate mock entities with these static methods:
 
-We will also utilize random integers from `dart:math` library. To import the library the customary command is:
+    static String mockFirstName(){ }
+    static String mockLastName(){ }
+    static String mockEmail({String firstName,String lastName,String companyName}){ }
+    static String mockUid(){}
+    static String mockImageUrl({String firstName,String lastName}){}
+    ....
+    static String mockParagraph(){} 
+    static String mockTitle(){}
 
-    import 'dart:math' as math;
+Note that for `mockEmail` we include optional variables to compose the email 
+to match the first name, last name, and company name of the individual. 
+But if they are null, it needs to be dealt with. Similarly for `mockImageUrl` we include 
+the first name and last name in case we want to create an image with the initials.
 
-To generate a random integer between 0 (including) and 10 (excluding) the command is:
+The importance of the Mock class is that we can later change the implementation of name
+generation or image generation without changing the `User` class. For example we may first implement it with `flutter_lorem` but 
+later we can move to a random pick from a list of first names. Same for last names etc.
 
-    int i = math.Random().nextInt(10)
+#### Create a method in the User class for mock User object
 
-#### Placeholder Images
+We can use `static` method in the `User` class to create a `mock` User. This would be then called:
 
-We will also need placeholder images. This is available at [Placehold](https://placehold.co/) with a number of options. We can use it in the following manner:
+    User user = User.createMockUser();
 
-    String imagePath = 'https://placehold.co/600x400/orange/white.png'
+Here the properties of this user will be created using methods in the Mock class.
 
-#### List of color names
+#### Create widgets that display a User object
 
-Where we will have a **List** of colors matching **CSS** colors and we will randomly pick a number and pick the color name from the **List** of 10 colors. Create a list with the following colors and save them in `constants.dart` file:
-
-    green, red, orange, yellow, blue, pink, cyan, magenta, coral, brown
-
-#### Unique ID generator
-
-We use the `uuid` package. To install
-
-    flutter pub add 
-
-To use we can use the `v4` by calling
-
-    String id = UuidV4().generate();
-
-## User Class
-
-Create a **User** class with the following properties:
-
-    String firstName
-    String lastName
-    String uid
-    String email
-    String imageUrl
-
-Use the **Data Class Generator** extension in VSCode to add methods to the `User` class
-
-Crate a `List` of `User` objects where you create the object as
-
-    User user = User(
-        firstName: <From lorem package, 1 paragraph, 1 word>,
-        lastName: <similar to above>,
-        email:  <Construct random email from 1 word lorems>, 
-        imageUrl: 'https://placehold.co/600x400/<randomColor>/<randomColor>.png', 
-        uid: <From uuid package>
-    );
+In the `widgets` folder:
+- Create a widget that returns a `ListTile` displaying user's image, name, and email.
+- Create a widget that returns a `Card` displaying a vertical widget with an image in the center, name, and email.
+- Create a widget that returns a `CircleAvatar` displays either an image or in the absence of that display initials.
 
 ### Setting up your environment before the lecture
 
