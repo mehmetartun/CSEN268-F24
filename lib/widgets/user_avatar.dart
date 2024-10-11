@@ -10,7 +10,7 @@ class UserAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircleAvatar(
       child: Text(
-        '${user.firstName[0]}${user.lastName[0]}',
+        '${user.firstName[0].toUpperCase()}${user.lastName[0].toUpperCase()}',
       ),
     );
   }
