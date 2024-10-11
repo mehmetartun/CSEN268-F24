@@ -11,6 +11,7 @@ class UserListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: UserAvatar(user: user),
+      // The style of the text will be taken from the ListTileTheme
       title: Text('${user.firstName} ${user.lastName}'),
       subtitle: Text(user.email),
     );
