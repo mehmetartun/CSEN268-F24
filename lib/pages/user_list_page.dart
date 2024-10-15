@@ -12,41 +12,12 @@ class UserListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // const List<String> colors = [
-    //   "green",
-    //   "red",
-    //   "orange",
-    //   "yellow",
-    //   "blue",
-    //   "pink",
-    //   "cyan",
-    //   "magenta",
-    //   "coral",
-    //   "brown"
-    // ];
-    // List<User> userList = List.generate(20, (index) {
-    //   return User(
-    //       firstName: lorem(paragraphs: 1, words: 1),
-    //       lastName: lorem(paragraphs: 1, words: 1),
-    //       email:
-    //           "${lorem(paragraphs: 1, words: 1)}@${lorem(paragraphs: 1, words: 1)}.com",
-    //       uid: const UuidV4().generate(),
-    //       imageUrl:
-    //           'https://placehold.co/600x400/${colors[math.Random().nextInt(10)]}/${colors[math.Random().nextInt(10)]}.png');
-    // });
-
     List<User> userList = List.generate(20, (index) {
       return User.createMockUser();
     });
 
     print(userList);
     return Scaffold(
-      //body: UserCard(user: userList[0]),
-      // body: UserListTile(user: userList[0]),
-      // body: ListView(
-      //     children: userList.map((user) {
-      //   return UserListTile(user: user);
-      // }).toList()),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -83,49 +54,6 @@ class UserListPage extends StatelessWidget {
           ],
         ),
       ),
-      //Text("Hello World"),
-      // body: Column(
-      //   children: [
-      //     Container(
-      //       height: 300,
-      //       child: ListView.separated(
-      //         primary: false,
-      //         itemBuilder: (context, index) {
-      //           return UserListTile(user: userList[index]);
-      //         },
-      //         separatorBuilder: (context, index) {
-      //           return const Divider();
-      //         },
-      //         itemCount: userList.length,
-      //       ),
-      //     ),
-      //     Divider(
-      //       color: Theme.of(context).colorScheme.primary,
-      //       height: 2,
-      //       thickness: 2,
-      //     ),
-      //     const SizedBox(height: 20),
-      //     Container(
-      //       height: 300,
-      //       child: ListView.separated(
-      //         scrollDirection: Axis.horizontal,
-      //         primary: false,
-      //         itemBuilder: (context, index) {
-      //           return Padding(
-      //             padding: index == 0
-      //                 ? const EdgeInsets.only(left: 20)
-      //                 : EdgeInsets.zero,
-      //             child: UserCard(user: userList[index]),
-      //           );
-      //         },
-      //         separatorBuilder: (context, index) {
-      //           return const SizedBox(width: 10);
-      //         },
-      //         itemCount: userList.length,
-      //       ),
-      //     ),
-      //   ],
-      // ),
       appBar: AppBar(
         centerTitle: true,
         title: const Text("User List"),
