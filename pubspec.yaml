@@ -38,6 +38,7 @@ dependencies:
   flutter_lorem: ^2.0.0
   uuid: ^4.5.1
   flutter_bloc: ^8.1.6
+  go_router: ^14.3.0
 
 dev_dependencies:
   flutter_test:

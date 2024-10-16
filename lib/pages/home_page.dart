@@ -1,7 +1,9 @@
+import 'package:CSEN268_F24/navigation/router.dart';
 import 'package:CSEN268_F24/pages/sign_in/sign_in_page.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import '../navigation/navigator_routes.dart';
+import '../navigation/navigator_route.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -35,7 +37,7 @@ class HomePage extends StatelessWidget {
               FilledButton(
                 child: const Text("Login - no Bloc/Cubit"),
                 onPressed: () {
-                  Navigator.pushNamed(context, NavigatorRoute.noBloc);
+                  context.goNamed(RouteName.noBloc);
                 },
               ),
               const SizedBox(height: 30),
@@ -46,7 +48,7 @@ class HomePage extends StatelessWidget {
               FilledButton(
                 child: const Text("Login with Cubit"),
                 onPressed: () {
-                  Navigator.pushNamed(context, NavigatorRoute.cubit);
+                  context.goNamed(RouteName.cubit);
                 },
               ),
               const SizedBox(height: 30),
@@ -57,10 +59,7 @@ class HomePage extends StatelessWidget {
               FilledButton(
                 child: const Text("Login with Bloc"),
                 onPressed: () {
-                  Navigator.pushNamed(context, NavigatorRoute.bloc);
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  //   return const SignInPage();
-                  // }));
+                  context.goNamed(RouteName.bloc);
                 },
               ),
             ],
