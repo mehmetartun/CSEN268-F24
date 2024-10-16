@@ -5,6 +5,7 @@ import 'package:CSEN268_F24/repositories/authentication/authentication_repositor
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'navigation/navigator_routes.dart';
 import 'pages/login/login_page.dart';
 
 void main() {
@@ -26,12 +27,12 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          initialRoute: '/',
+          initialRoute: NavigatorRoute.home,
           routes: {
-            '/': (context) => const HomePage(),
-            '/noBloc': (context) => const StatefulLoginPage(),
-            '/bloc': (context) => const SignInPage(),
-            '/cubit': (context) => const LoginPage(),
+            NavigatorRoute.home: (context) => const HomePage(),
+            NavigatorRoute.noBloc: (context) => const StatefulLoginPage(),
+            NavigatorRoute.bloc: (context) => const SignInPage(),
+            NavigatorRoute.cubit: (context) => const LoginPage(),
           }),
     );
   }
