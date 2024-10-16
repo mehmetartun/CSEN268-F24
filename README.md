@@ -1,18 +1,21 @@
 ## Santa Clara University - CSEN268 Fall 2024
 
-### Lecture 7 - 15 Oct 2024
+### Lecture 7 Extra Material - 15 Oct 2024
 
-We look at the repository pattern and continue to bloc library. Use the following to add the bloc_library to your code.
+This version includes what has been done in the lecture:
 
-    flutter pub add flutter_bloc
+- Created a **Repository** abstract class with two implementations
+- Injected the repository above the **MaterialApp**
+- Created a stateful widget with a form to access the **signIn** method of the repository
+- We also did an impelementation with a **cubit** where the repository was injected 
+into the cubit at the time of the creation of the cubit. The various states of the login process was captured by 
+different views which where managed by the **BlocBuilder**.
 
-#### RepositoryProvider
+The extra material:
 
-The tag `Lecture7Start` will already include the `RepositoryProvider` implemented.
-
-#### Cubit
-
-In the rest of the lecture we aim to implement the `Cubit` pattern and `Bloc` pattern
+- Created a **Bloc** version of the same under the **SignInPage**
+- Created a **HomePage** to be able to provide buttons to switch to the three different implementations
+- Added routes to the **MaterialApp** to be able to navigate to the three different implementations
 
 ### Setting up your environment before the lecture
 
