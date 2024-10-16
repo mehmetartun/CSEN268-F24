@@ -16,6 +16,7 @@ The extra material:
 - Created a **Bloc** version of the same under the **SignInPage**
 - Created a **HomePage** to be able to provide buttons to switch to the three different implementations
 - Added routes to the **MaterialApp** to be able to navigate to the three different implementations
+- Created a **NavigatorRoute** class to house the named routes for better code organization
 
 ### Setting up your environment before the lecture
 
