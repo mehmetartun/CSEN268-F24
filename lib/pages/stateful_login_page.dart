@@ -4,14 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../model/user.dart';
 import '../repositories/authentication/authentication_repository.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class StatefulLoginPage extends StatefulWidget {
+  const StatefulLoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<StatefulLoginPage> createState() => _StatefulLoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _StatefulLoginPageState extends State<StatefulLoginPage> {
   User? user;
   late AuthenticationRepository repo;
   String? email;
@@ -60,6 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                       labelText: "Email",
                     ),
                     validator: (value) {
+                      // Also you can use value.trim() to avoid full of spaces...
                       if (value == null || value.isEmpty) {
                         return 'Please enter some text';
                       }

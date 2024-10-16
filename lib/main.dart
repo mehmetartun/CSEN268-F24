@@ -1,9 +1,8 @@
-import 'package:CSEN268_F24/pages/user_list_page.dart';
 import 'package:CSEN268_F24/repositories/authentication/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'pages/login_page.dart';
+import 'pages/login/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider(
       create: (context) {
-        return (FirebaseAuthenticationRepository() as AuthenticationRepository);
+        return (OktaAuthenticationRepository() as AuthenticationRepository);
       },
       child: MaterialApp(
         title: 'Flutter Demo',
