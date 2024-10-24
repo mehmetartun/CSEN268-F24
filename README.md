@@ -1,6 +1,6 @@
 ## Santa Clara University - CSEN268 Fall 2024
 
-### Lecture 7 - 15 Oct 2024
+### Lecture 7 - 15 Oct 2024 - Part 2
 
 We look at the repository pattern and continue to bloc library. Use the following to add the bloc_library to your code.
 
