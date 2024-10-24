@@ -6,13 +6,11 @@ sealed class SignInEvent {}
 class SignInWithEmailEvent extends SignInEvent {
   final String email;
   final String password;
-
   SignInWithEmailEvent({required this.email, required this.password});
 }
 
 class SignInErrorEvent extends SignInEvent {
   final String errorText;
-
   SignInErrorEvent({required this.errorText});
 }
 
