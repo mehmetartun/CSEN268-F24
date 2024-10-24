@@ -1,22 +1,81 @@
 ## Santa Clara University - CSEN268 Fall 2024
 
-### Lecture 7 Extra Material - 15 Oct 2024
+### Lecture 8 - Part 1 - Basic Go Router Implemented
 
-This version includes what has been done in the lecture:
+In the first part of the lecture we implemented a basic `GoRouter`. For this we need a different constructor for the `MaterialApp`, namely `MaterialApp.router`
+```dart
+    child: MaterialApp.router(
+    title: 'Flutter Demo',
+    theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+    ),
+    routerConfig: router,
+    ),
+```
+Here the `router` is a `GoRouter` object which we shall investigate below:
+```dart
+class RouteName {
+  static const home = "home";
+  static const bloc = "bloc";
+  static const cubit = "cubit";
+  static const noBloc = "noBloc";
+}
+final router = GoRouter(routes: [
+  GoRoute(
+      name: RouteName.home,
+      path: '/',
+      builder: (context, state) {
+        return const HomePage();
+      },
+      routes: [
+        GoRoute(
+            name: RouteName.bloc,
+            path: 'bloc',
+            builder: (context, state) {
+              return const SignInPage();
+            }),
+        GoRoute(
+            name: RouteName.cubit,
+            path: 'cubit',
+            builder: (context, state) {
+              return const LoginPage();
+            }),
+        GoRoute(
+            name: RouteName.noBloc,
+            path: 'noBloc',
+            builder: (context, state) {
+              return const StatefulLoginPage();
+            }),
+      ]),
+]);
+```
+1. The `router` definition assigns a `name` and `path` to each route which is a `GoRoute`. 
+2. Each `GoRoute` has a `builder` and that takes `state` of type `GoRouterState` and `context`. 
+3. The child routes of a `GoRoute` imply they will be **pushed** on top of the parent. Any siblings of a `GoRoute` imply they will be **replaced**. Under the hood it's `Navigator.pushNamed()` and `Navigator.pushReplacementNamed()`
+4. Optionally `GoRouter` as well as `GoRoute` objects can have `redirect`, `errorBuilder`, etc to be explored later.
+5. In order not to pass text around, we created a class `RouteName` and assigned static properties that means we won't be using arbitrary strings within our code and avoid errors.
 
-- Created a **Repository** abstract class with two implementations
-- Injected the repository above the **MaterialApp**
-- Created a stateful widget with a form to access the **signIn** method of the repository
-- We also did an impelementation with a **cubit** where the repository was injected 
-into the cubit at the time of the creation of the cubit. The various states of the login process was captured by 
-different views which where managed by the **BlocBuilder**.
-
-The extra material:
-
-- Created a **Bloc** version of the same under the **SignInPage**
-- Created a **HomePage** to be able to provide buttons to switch to the three different implementations
-- Added routes to the **MaterialApp** to be able to navigate to the three different implementations
-- Created a **NavigatorRoute** class to house the named routes for better code organization
+#### Navigation with the GoRouter
+In the `HomePage()` the buttons have the navigation methods attached:
+```dart 
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Home")),
+      body: SingleChildScrollView(
+            ...
+            FilledButton(
+                child: const Text("Login - no Bloc/Cubit"),
+                onPressed: () {
+                context.goNamed(RouteName.noBloc);
+                },
+            ),
+            ...
+```
+Either `context.goNamed()` or `GoRouter.of(context).goNamed()` can be used.
 
 ### Setting up your environment before the lecture
 
