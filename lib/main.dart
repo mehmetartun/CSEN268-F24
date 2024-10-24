@@ -1,4 +1,5 @@
 import 'package:CSEN268_F24/navigation/router.dart';
+import 'package:CSEN268_F24/pages/map_page.dart';
 import 'package:CSEN268_F24/repositories/authentication/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          home: ImagePage()),
+          home: MapPage()),
     );
   }
 }
