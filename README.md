@@ -82,12 +82,12 @@ GoogleMap(
     );
 ```
 
-To get a handle on the `MapController`, define a variable `mapController` and set it to the 
+To get a handle on the `GoogleMapController`, define a variable `mapController` and set it to the 
 controller returned by the callback. In the same callback one could also set up listeners to position changes
 so that the map is updated automatically. A sample callback on position updates would be:
 ```dart
 late MapController mapController;
-StreamSubscription<Position>? positionStreamSubscription;
+late StreamSubscription<Position> positionStreamSubscription;
 ...
   void onMapCreated(GoogleMapController controller) {
     await checkPermission();
