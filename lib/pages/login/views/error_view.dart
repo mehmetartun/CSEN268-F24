@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../cubit/login_cubit.dart';
 
 class ErrorView extends StatelessWidget {
   const ErrorView({super.key, required this.errorText});
@@ -30,6 +33,16 @@ class ErrorView extends StatelessWidget {
                   color: Theme.of(context).colorScheme.onErrorContainer),
             ),
           ),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(20),
+            child: FilledButton(
+              child: Text("Reset"),
+              onPressed: () {
+                BlocProvider.of<LoginCubit>(context).reset();
+              },
+            ),
+          )
         ],
       ),
     );

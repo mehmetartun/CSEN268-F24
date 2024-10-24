@@ -21,15 +21,15 @@ class LoginPage extends StatelessWidget {
       // the context it cannot reach the repository through RepositoryProvider.of<>
       child: BlocBuilder<LoginCubit, LoginState>(
         builder: (context, state) {
-          switch (state.runtimeType) {
-            case LoginError:
+          switch (state) {
+            case LoginError _:
               return ErrorView(errorText: (state as LoginError).errorText);
-            case LoginWaiting:
+            case LoginWaiting _:
               return WaitingView();
-            case LoggedIn:
+            case LoggedIn _:
               return LoggedInView();
 
-            case LoginInitial:
+            case LoginInitial _:
             default:
               return InitialView();
           }
