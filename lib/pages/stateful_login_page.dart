@@ -24,11 +24,19 @@ class _StatefulLoginPageState extends State<StatefulLoginPage> {
     super.initState();
   }
 
+  void showSnackBar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Login successful for user: ${user?.email}")));
+  }
+
   void loginUser() async {
     setState(() {
       busy = true;
     });
     user = await repo.signIn(email: email!, password: password!);
+    if (user != null) {
+      showSnackBar();
+    }
     setState(() {
       busy = false;
     });
