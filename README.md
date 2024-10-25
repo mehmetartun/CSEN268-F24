@@ -1,22 +1,11 @@
 ## Santa Clara University - CSEN268 Fall 2024
 
-### Lecture 7 Extra Material - 15 Oct 2024
+### Lecture 8 Part 2 - 17 October 2024
 
-This version includes what has been done in the lecture:
-
-- Created a **Repository** abstract class with two implementations
-- Injected the repository above the **MaterialApp**
-- Created a stateful widget with a form to access the **signIn** method of the repository
-- We also did an impelementation with a **cubit** where the repository was injected 
-into the cubit at the time of the creation of the cubit. The various states of the login process was captured by 
-different views which where managed by the **BlocBuilder**.
-
-The extra material:
-
-- Created a **Bloc** version of the same under the **SignInPage**
-- Created a **HomePage** to be able to provide buttons to switch to the three different implementations
-- Added routes to the **MaterialApp** to be able to navigate to the three different implementations
-- Created a **NavigatorRoute** class to house the named routes for better code organization
+In this lecture we accomplish a number of things:
+1. Nested Navigation using `ShellRoute` in `GoRouter`
+2. Utilize the `refreshListenable` property of the `GoRouter` which allows the `redirect` to be run on any change that comes through the `refreshListenable`. For that purpose, we turn the `AuthenticationBloc.stream` to a **listenable**. 
+3. We add a **signIn** and **signOut** buttons in the app to trigger changes in the  `AuthenticationBloc` and observe the `GoRouter` redirecting us to the `/login` route. 
 
 ### Setting up your environment before the lecture
 

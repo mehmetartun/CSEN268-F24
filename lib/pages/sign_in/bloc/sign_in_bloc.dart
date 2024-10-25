@@ -13,7 +13,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       // TODO: implement event handler
     });
     on<SignInWithEmailEvent>((event, emit) {
-      loginUser(email: event.email, password: event.password);
+      loginUser(event, emit, email: event.email, password: event.password);
     });
     on<SignInErrorEvent>((event, emit) {
       error(event, emit);
@@ -36,7 +36,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     emit(SignInError(errorText: event.errorText));
   }
 
-  void loginUser({
+  void loginUser(
+    event,
+    emit, {
     required String email,
     required String password,
   }) async {
