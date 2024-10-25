@@ -7,6 +7,7 @@ In this lecture we accomplish a number of things:
 2. Utilize the `refreshListenable` property of the `GoRouter` which allows the `redirect` to be run on any change that comes through the `refreshListenable`. For that purpose, we turn the `AuthenticationBloc.stream` to a **listenable**. 
 3. We add a **signIn** and **signOut** buttons in the app to trigger changes in the  `AuthenticationBloc` and observe the `GoRouter` redirecting us to the `/login` route. 
 
+
 ### Setting up your environment before the lecture
 
 Each lecture is stored under a separate tag. In your computer do the following
