@@ -1,6 +1,6 @@
 {
-    "name": "lect4",
-    "short_name": "lect4",
+    "name": "fmdemo",
+    "short_name": "fmdemo",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

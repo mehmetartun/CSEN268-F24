@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "940129645525",
+    "project_id": "fir-messaging-8b691",
+    "storage_bucket": "fir-messaging-8b691.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:940129645525:android:5114240a14dd8daec6035c",
+        "android_client_info": {
+          "package_name": "com.artun.fmdemo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCy9AQ88EwCvGuLw3wAg77fz0wwecS6-yk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
