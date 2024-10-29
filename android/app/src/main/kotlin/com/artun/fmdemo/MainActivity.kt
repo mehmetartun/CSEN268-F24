@@ -1,4 +1,4 @@
-package com.example.lect4
+package com.artun.fmdemo
 
 import io.flutter.embedding.android.FlutterActivity
 
