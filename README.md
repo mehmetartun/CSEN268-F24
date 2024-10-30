@@ -2,7 +2,7 @@
 
 ## Lecture 11 - Handling Messages with Bloc
 
-In this part we implement a Notifications Bloc which handles the messages coming into the platform. The event handlers correspond to three event types:
+In this part we implement a Notifications Bloc which handles the messages coming into the platform. The event handlers correspond to three event types in [notifications_bloc.dart](/lib/blocs/notifications/bloc/notifications_bloc.dart):
 
 ```dart
     on<NotificationsEvent>((event, emit) {
@@ -60,15 +60,13 @@ and need to be cancelled on close of the bloc:
 
 ## Displaying messages
 
-Now that we are catcing messages from Firebase, how do we display them?
-
-The `build()` method of `MyApp()` is of this form:
+Now that we are catcing messages from Firebase, how do we display them? In [main.dart](/lib/main.dart) the `build()` method of `MyApp()` is of this form:
 ```dart
   Widget build(BuildContext context) {
     return RepositoryProvider(
       ...
       child: BlocProvider(
-        ...
+        ... // create the bloc
         child: MaterialApp(
             ...
             builder: (context, child) {
