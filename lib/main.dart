@@ -1,3 +1,4 @@
+import 'package:CSEN268_F24/blocs/notifications/bloc/notifications_bloc.dart';
 import 'package:CSEN268_F24/firebase_options.dart';
 import 'package:CSEN268_F24/navigation/router.dart';
 import 'package:CSEN268_F24/pages/map_page.dart';
@@ -55,13 +56,7 @@ void main() async {
     }
   }
   print("Messaging token: $token");
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    print('Handling a foreground message: ${message.messageId}');
-    print('Message data: ${message.data}');
-    print('Message notification: ${message.notification?.title}');
-    print('Message notification: ${message.notification?.body}');
-    // Do whatever you need to do with this message
-  });
+
   if (kIsWeb) {
     FirebaseMessaging.onBackgroundMessage((message) async {
       // Do what you need to do with the message
@@ -82,13 +77,28 @@ class MyApp extends StatelessWidget {
       create: (context) {
         return (OktaAuthenticationRepository() as AuthenticationRepository);
       },
-      child: MaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
-          home: MessagingPage()),
+      child: BlocProvider(
+        create: (context) => NotificationsBloc()..init(),
+        child: MaterialApp(
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              useMaterial3: true,
+            ),
+            builder: (context, child) {
+              Widget _child = child ?? Container();
+              return BlocListener<NotificationsBloc, NotificationsState>(
+                listener: (context, state) {
+                  // TODO: implement listener
+                  print(state.runtimeType);
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text("Test Message")));
+                },
+                child: _child,
+              );
+            },
+            home: MessagingPage()),
+      ),
     );
   }
 }
