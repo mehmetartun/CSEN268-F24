@@ -5,4 +5,12 @@ sealed class NotificationsState {}
 
 final class NotificationsInitial extends NotificationsState {}
 
-final class NotificationsTestState extends NotificationsState {}
+final class NotificationsReceivedState extends NotificationsState {
+  final RemoteMessage message;
+  final NotificationType notificationType;
+
+  NotificationsReceivedState({
+    required this.message,
+    required this.notificationType,
+  });
+}

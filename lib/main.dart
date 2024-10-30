@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'navigation/route_name.dart';
 import 'pages/image_page.dart';
 
@@ -88,11 +90,24 @@ class MyApp extends StatelessWidget {
             builder: (context, child) {
               Widget _child = child ?? Container();
               return BlocListener<NotificationsBloc, NotificationsState>(
-                listener: (context, state) {
-                  // TODO: implement listener
-                  print(state.runtimeType);
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text("Test Message")));
+                listener: (context, state) async {
+                  if (state is NotificationsReceivedState) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        behavior: SnackBarBehavior.floating,
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                state.message.notification?.title ?? "<title>"),
+                            Text(state.message.notification?.body ?? "<body>"),
+                            Text("Type: ${state.notificationType.name}"),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
                 },
                 child: _child,
               );
