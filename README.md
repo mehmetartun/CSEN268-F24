@@ -1,22 +1,8 @@
 # Santa Clara University - CSEN268 Fall 2024
 
-## Lecture 11 - Firebase Cloud Messaging Web Modification
+## Lecture 11 - Handling Messages with Bloc
 
-We need to implement a slightly different flow for web. 
-
-1. Add the service worker for firebase messaging [firebase-messaging-sw.js](/web/firebase-messaging-sw.js) in the `web` directory. 
-
-2. Modify the `onBackgroundMessage` to handle web differently
-```dart
-  if (kIsWeb) {
-    FirebaseMessaging.onBackgroundMessage((message) async {
-      // Do what you need to do with the message
-    });
-  } else {
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  }
-```
-The `kIsWeb` is a boolean that's `true` for Web and `false` otherwise.
+In this part we implement a Notifications Bloc which handles the messages coming into the platform.
 
 
 
