@@ -6,6 +6,7 @@ import 'package:CSEN268_F24/repositories/authentication/authentication_repositor
 import 'package:firebase_app_installations/firebase_app_installations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
@@ -61,7 +62,14 @@ void main() async {
     print('Message notification: ${message.notification?.body}');
     // Do whatever you need to do with this message
   });
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  if (kIsWeb) {
+    FirebaseMessaging.onBackgroundMessage((message) async {
+      // Do what you need to do with the message
+    });
+  } else {
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  }
+
   runApp(MyApp());
 }
 
