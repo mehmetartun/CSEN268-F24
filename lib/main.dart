@@ -1,7 +1,6 @@
 import 'package:CSEN268_F24/blocs/notifications/bloc/notifications_bloc.dart';
 import 'package:CSEN268_F24/firebase_options.dart';
-import 'package:CSEN268_F24/navigation/router.dart';
-import 'package:CSEN268_F24/pages/map_page.dart';
+import 'package:CSEN268_F24/pages/alert_page.dart';
 import 'package:CSEN268_F24/pages/messaging_page.dart';
 import 'package:CSEN268_F24/repositories/authentication/authentication_repository.dart';
 import 'package:firebase_app_installations/firebase_app_installations.dart';
@@ -10,12 +9,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
-
-import 'package:firebase_analytics/firebase_analytics.dart';
-
-import 'navigation/route_name.dart';
-import 'pages/image_page.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -71,7 +64,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +105,7 @@ class MyApp extends StatelessWidget {
                 child: _child,
               );
             },
-            home: MessagingPage()),
+            home: AlertPage()),
       ),
     );
   }
