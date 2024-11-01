@@ -26,7 +26,7 @@ In order to pull a particular tag to your computer
 
 ### Cloning to Google IDX
 
-1. Go to this link. [idx.dev]([https://idx.dev?](https://idx.google.com/import?url=https://github.com/mehmetartun/CSEN268-F24))
+1. Go to this link. [idx.dev](https://idx.google.com/import?url=https://github.com/mehmetartun/CSEN268-F24)
 2. Name your project (default value is fine)
 3. Click Flutter Project checkbox
 4. Wait for the setup to continue
