@@ -24,5 +24,18 @@ In order to pull a particular tag to your computer
 
     git checkout tags/Lecture5_start -b Lecture5_study
 
+### Cloning to Google IDX
+
+1. Go to this link. [idx.dev]([https://idx.dev?](https://idx.google.com/import?url=https://github.com/mehmetartun/CSEN268-F24))
+2. Name your project (default value is fine)
+3. Click Flutter Project checkbox
+4. Wait for the setup to continue
+5. Open the terminal and pull requisite tag from the repo by
+```zsh
+git pull
+git tag -l
+git tags/<TagName> -b <NewLocalBranchName>
+```
+
 
 
