@@ -107,7 +107,7 @@ class MyApp extends StatelessWidget {
                 child: _child,
               );
             },
-            home: ContactsPage()),
+            home: GenericPage(title: "Animations")),
       ),
     );
   }
