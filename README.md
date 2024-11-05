@@ -1,5 +1,6 @@
 # Santa Clara University - CSEN268 Fall 2024
 
+[Table of Contents](/toc.md)
 
 ## Lecture 13 - Modifying Contacts on the Phone
 
