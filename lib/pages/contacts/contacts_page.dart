@@ -1,4 +1,5 @@
 import 'package:CSEN268_F24/pages/contacts/cubit/contacts_cubit.dart';
+import 'package:CSEN268_F24/pages/contacts/views/contact_edit_view.dart';
 import 'package:CSEN268_F24/pages/contacts/views/contacts_permission_denied_view.dart';
 import 'package:CSEN268_F24/pages/contacts/views/contacts_view.dart';
 import 'package:CSEN268_F24/pages/contacts/views/contacts_waiting_view.dart';
@@ -10,8 +11,9 @@ class ContactsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ContactsCubit cubit = ContactsCubit();
     return BlocProvider(
-      create: (context) => ContactsCubit()..init(),
+      create: (context) => cubit..init(),
       child: BlocBuilder<ContactsCubit, ContactsState>(
         builder: (context, state) {
           switch (state) {
@@ -24,7 +26,14 @@ class ContactsPage extends StatelessWidget {
             case ContactsPermissionReadOnly _:
               return ContactsView(contacts: state.contacts, readOnly: true);
             case ContactsPermissionFullAccess _:
-              return ContactsView(contacts: state.contacts, readOnly: false);
+              return ContactsView(
+                contacts: state.contacts,
+                readOnly: false,
+                editContactCallback: cubit.editContact,
+              );
+            case ContactEdit _:
+              return ContactEditView(
+                  contact: state.contact, saveCallback: state.saveCallback);
           }
         },
       ),

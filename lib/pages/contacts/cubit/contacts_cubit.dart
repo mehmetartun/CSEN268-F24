@@ -16,8 +16,13 @@ class ContactsCubit extends Cubit<ContactsState> {
   void init() async {
     if (await FlutterContacts.requestPermission()) {
       permissionType = PermissionType.full;
-      contacts = await FlutterContacts.getContacts();
-      emit(ContactsPermissionFullAccess(contacts: contacts!));
+      contacts = await FlutterContacts.getContacts(
+          withProperties: true, withAccounts: true, withPhoto: true);
+      emit(ContactsPermissionFullAccess(
+          contacts: contacts!,
+          editCallback: (Contact contact) {
+            saveContact(contact);
+          }));
       return;
     } else {
       permissionType = PermissionType.none;
@@ -32,6 +37,18 @@ class ContactsCubit extends Cubit<ContactsState> {
       } else {}
     }
     emit(ContactsPermissionDenied());
+  }
+
+  void editContact(Contact contact) {
+    emit(ContactEdit(saveCallback: saveContact, contact: contact));
+  }
+
+  void saveContact(Contact contact) async {
+    await FlutterContacts.updateContact(contact);
+    contacts = await FlutterContacts.getContacts(
+        withProperties: true, withAccounts: true, withPhoto: true);
+    emit(ContactsPermissionFullAccess(
+        contacts: contacts!, editCallback: editContact));
   }
 
   void getContacts() async {
