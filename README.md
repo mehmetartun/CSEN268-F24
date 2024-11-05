@@ -17,7 +17,7 @@ For Android we add the following to the [AndroidManifest.xml](/android/app/src/m
 <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
 ```
 and for iOS we have to give a reason for accessing the contacts in the [Info.plist](/ios/Runner/Info.plist) file:
-```plist
+```xml
 <key>NSContactsUsageDescription</key>
 <string>To faciliatate sharing with your contacts, we require access to contacts on your device.</string>
 ```
