@@ -1,9 +1,8 @@
 # Santa Clara University - CSEN268 Fall 2024
 
-## Lecture 12 - Dialogsheets and BottomSheet
+## Lecture 13 - Accessing Contacts on the Phone
 
-We will be implementing interactions like DialogSheet or BottomSheet.
-
+We start with the `GenericPage` as home page.
 
 ### Setting up your environment before the lecture
 
