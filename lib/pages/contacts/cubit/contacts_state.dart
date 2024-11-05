@@ -15,12 +15,23 @@ final class ContactsPermissionReadOnly extends ContactsState {
 
 final class ContactsPermissionFullAccess extends ContactsState {
   final List<Contact> contacts;
+  final void Function(Contact) editCallback;
 
-  ContactsPermissionFullAccess({required this.contacts});
+  ContactsPermissionFullAccess({
+    required this.contacts,
+    required this.editCallback,
+  });
 }
 
 final class ContactsWaiting extends ContactsState {
   final String message;
 
   ContactsWaiting({required this.message});
+}
+
+final class ContactEdit extends ContactsState {
+  final Contact contact;
+  final void Function(Contact) saveCallback;
+
+  ContactEdit({required this.contact, required this.saveCallback});
 }

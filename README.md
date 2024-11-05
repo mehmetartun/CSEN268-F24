@@ -1,89 +1,52 @@
 # Santa Clara University - CSEN268 Fall 2024
 
 
-## Lecture 13 - Accessing Contacts on the Phone
+## Lecture 13 - Modifying Contacts on the Phone
 
-We start with the `GenericPage` as home page.
+In the previous lecture we accessed the contacts on the phone and listed them. Now we will try to modify them
 
-### Addding dependencies and permissions
-
-We import the package `flutter_contacts`
-```zsh
-flutter pub add flutter_contacts
-```
-For Android we add the following to the [AndroidManifest.xml](/android/app/src/main/AndroidManifest.xml) file:
-```xml
-<uses-permission android:name="android.permission.READ_CONTACTS"/>
-<uses-permission android:name="android.permission.WRITE_CONTACTS"/>
-```
-and for iOS we have to give a reason for accessing the contacts in the [Info.plist](/ios/Runner/Info.plist) file:
-```xml
-<key>NSContactsUsageDescription</key>
-<string>To faciliatate sharing with your contacts, we require access to contacts on your device.</string>
-```
-
-### Creating a Page
-
-We create a Contacts Page [contacts_page.dart](/lib/pages/contacts_page.dart) and wrap it with a `ContactsCubit`. This allows us to do a few things:
-1. In the `init()` call we request permission and get the permission status (in file [contacts_cubit.dart](/lib/pages/contacts/cubit/contacts_cubit.dart)). If permitted, we retrieve the contacts.
+### Changes to the cubit
+We add two methods to our cubit such that we have a function call when
+ we hit the **edit** button next to the contact and when we hit 
+ the submit button after editing the said contact.
 ```dart
-  void init() async {
-    if (await FlutterContacts.requestPermission()) {
-      permissionType = PermissionType.full;
-      contacts = await FlutterContacts.getContacts();
-      emit(ContactsPermissionFullAccess(contacts: contacts!));
-      return;
-    } else {
-      permissionType = PermissionType.none;
-      if (Platform.isAndroid) {
-        if (await FlutterContacts.requestPermission(readonly: true)) {
-          permissionType = PermissionType.readOnly;
-          contacts = await FlutterContacts.getContacts();
+  void editContact(Contact contact) {
+    emit(ContactEdit(saveCallback: saveContact, contact: contact));
+  }
 
-          emit(ContactsPermissionReadOnly(contacts: contacts!));
-          return;
-        }
-      } else {}
-    }
-    emit(ContactsPermissionDenied());
+  void saveContact(Contact contact) async {
+    await FlutterContacts.updateContact(contact);
+    contacts = await FlutterContacts.getContacts(
+        withProperties: true, withAccounts: true, withPhoto: true);
+    emit(ContactsPermissionFullAccess(
+        contacts: contacts!, editCallback: editContact));
   }
 ```
-2. With the state emitted (either with full access permission or with read-only permission) we display the contact list by directing the `switch` to `ContactsView`.
+In the `editContact` method we simply emit a new state `ContactEdit()` such that we can trigger the `ContactEditView()` in the `ContactsPage()` widget:
 ```dart
-class ContactsView extends StatelessWidget {
-  final List<Contact> contacts;
-  final bool readOnly;
-  const ContactsView({
-    super.key,
-    required this.contacts,
-    required this.readOnly,
-  });
+class ContactsPage extends StatelessWidget {
+  const ContactsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Contacts"),
-      ),
-      body: Column(
-        children: [
-          Text("Here are the contacts"),
-          Expanded(
-            child: ListView(
-              children: contacts.map((contact) {
-                return ListTile(title: Text(contact.displayName));
-              }).toList(),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+    final ContactsCubit cubit = ContactsCubit();
+    return BlocProvider(
+      create: (context) => cubit..init(),
+      child: BlocBuilder<ContactsCubit, ContactsState>(
+        builder: (context, state) {
+          switch (state) {
+            ... 
+            case ContactEdit _:
+              return ContactEditView(
+                  contact: state.contact, saveCallback: state.saveCallback);
+          }}));}}
 ```
-Here we must note that the `ListView` will try to take an infinite length and try to push Column. With the `Expanded` widget wrapped around it (it only works inside `Row`, `Column` and `Flex`)  the `ListView` will only try to take as much space as the `Column`'s perent allows it!
-3. Finally the list of the contacts are displayed as:
-![Contact List](/assets/images/ContactListView.png)
+With this we complete the view and update functionality of contacts. Something to pay attention is to specify `withProperties`, `withAccounts` and `withPhoto` when getting contacts from Android because without these you cannot update the contact.
+```dart
+    contacts = await FlutterContacts.getContacts(
+        withProperties: true, withAccounts: true, withPhoto: true);
+```
+![Contacts](/assets/images/SavingAndDisplayingContacts.gif)
 
 ### Setting up your environment before the lecture
 
