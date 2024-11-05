@@ -2,52 +2,9 @@
 
 [Table of Contents](/toc.md)
 
-## Lecture 13 - Modifying Contacts on the Phone
+## Lecture 13 - Starting point for Explicit Animations
 
-In the previous lecture we accessed the contacts on the phone and listed them. Now we will try to modify them
-
-### Changes to the cubit
-We add two methods to our cubit such that we have a function call when
- we hit the **edit** button next to the contact and when we hit 
- the submit button after editing the said contact.
-```dart
-  void editContact(Contact contact) {
-    emit(ContactEdit(saveCallback: saveContact, contact: contact));
-  }
-
-  void saveContact(Contact contact) async {
-    await FlutterContacts.updateContact(contact);
-    contacts = await FlutterContacts.getContacts(
-        withProperties: true, withAccounts: true, withPhoto: true);
-    emit(ContactsPermissionFullAccess(
-        contacts: contacts!, editCallback: editContact));
-  }
-```
-In the `editContact` method we simply emit a new state `ContactEdit()` such that we can trigger the `ContactEditView()` in the `ContactsPage()` widget:
-```dart
-class ContactsPage extends StatelessWidget {
-  const ContactsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final ContactsCubit cubit = ContactsCubit();
-    return BlocProvider(
-      create: (context) => cubit..init(),
-      child: BlocBuilder<ContactsCubit, ContactsState>(
-        builder: (context, state) {
-          switch (state) {
-            ... 
-            case ContactEdit _:
-              return ContactEditView(
-                  contact: state.contact, saveCallback: state.saveCallback);
-          }}));}}
-```
-With this we complete the view and update functionality of contacts. Something to pay attention is to specify `withProperties`, `withAccounts` and `withPhoto` when getting contacts from Android because without these you cannot update the contact.
-```dart
-    contacts = await FlutterContacts.getContacts(
-        withProperties: true, withAccounts: true, withPhoto: true);
-```
-![Contacts](/assets/images/SavingAndDisplayingContacts.gif)
+In this part we will do explicit animations.
 
 ### Setting up your environment before the lecture
 
