@@ -85,12 +85,6 @@ Here we must note that the `ListView` will try to take an infinite length and tr
 3. Finally the list of the contacts are displayed as:
 ![Contact List](/assets/images/ContactListView.png)
 
-
-
-
-### Handling permissions
-The contacts permission needs to be granted by the device. To do this
-
 ### Setting up your environment before the lecture
 
 Each lecture is stored under a separate tag. In your computer do the following
