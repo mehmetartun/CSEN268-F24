@@ -28,6 +28,8 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSContactsUsageDescription</key>
+	<string>To faciliatate sharing with your contacts, we require access to contacts on your device.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Access to the location is needed for the app when open.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
