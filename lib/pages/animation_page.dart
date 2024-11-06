@@ -11,13 +11,14 @@ class AnimationPage extends StatefulWidget {
 class _AnimationPageState extends State<AnimationPage>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
-  late Animation<double> animation;
+  late Animation<Color?> animation;
 
   @override
   void initState() {
     controller = AnimationController(
         vsync: this, duration: Duration(milliseconds: 3000));
-    animation = Tween<double>(begin: 0, end: 200).animate(controller)
+    animation = ColorTween(begin: Colors.yellow[700], end: Colors.blue[400])
+        .animate(controller)
       ..addListener(() {
         setState(() {});
       })
@@ -68,9 +69,9 @@ class _AnimationPageState extends State<AnimationPage>
               children: [
                 Container(width: 200, height: 200, color: Colors.grey[300]),
                 Container(
-                  color: Colors.red,
-                  width: animation.value,
-                  height: animation.value,
+                  color: animation.value,
+                  width: 180,
+                  height: 180,
                 ),
               ],
             ),
@@ -78,7 +79,7 @@ class _AnimationPageState extends State<AnimationPage>
             Text(
                 "Controller: ${NumberFormat("0.00").format(controller.value)}"),
             SizedBox(height: 10),
-            Text("Animation: ${NumberFormat("0.00").format(animation.value)}")
+            Text("Animation: ${animation.value}")
           ],
         ),
       )),

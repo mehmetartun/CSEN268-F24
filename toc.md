@@ -29,6 +29,7 @@ The content in this repo follows the CSEN268 Fall24 Lecture at Santa Clara Unive
 - [Lecture 13 - 02](https://github.com/mehmetartun/CSEN268-F24/tree/L13.02) Updating Contacts
 - [Lecture 13 - 03](https://github.com/mehmetartun/CSEN268-F24/tree/L13.03) Start Explicit Animations
 - [Lecture 13 - 04](https://github.com/mehmetartun/CSEN268-F24/tree/L13.04) Implement Explicit Animations
+- [Lecture 13 - 05](https://github.com/mehmetartun/CSEN268-F24/tree/L13.04) Modify color property
 
 
 
