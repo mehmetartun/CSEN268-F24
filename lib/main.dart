@@ -1,6 +1,7 @@
 import 'package:CSEN268_F24/blocs/notifications/bloc/notifications_bloc.dart';
 import 'package:CSEN268_F24/firebase_options.dart';
 import 'package:CSEN268_F24/pages/alert_page.dart';
+import 'package:CSEN268_F24/pages/animation_page.dart';
 import 'package:CSEN268_F24/pages/contacts/contacts_page.dart';
 import 'package:CSEN268_F24/pages/generic_page.dart';
 import 'package:CSEN268_F24/pages/messaging_page.dart';
@@ -77,37 +78,37 @@ class MyApp extends StatelessWidget {
       child: BlocProvider(
         create: (context) => NotificationsBloc()..init(),
         child: MaterialApp(
-            title: 'Flutter Demo',
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-              useMaterial3: true,
-            ),
-            builder: (context, child) {
-              Widget _child = child ?? Container();
-              return BlocListener<NotificationsBloc, NotificationsState>(
-                listener: (context, state) async {
-                  if (state is NotificationsReceivedState) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        behavior: SnackBarBehavior.floating,
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                                state.message.notification?.title ?? "<title>"),
-                            Text(state.message.notification?.body ?? "<body>"),
-                            Text("Type: ${state.notificationType.name}"),
-                          ],
-                        ),
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          builder: (context, child) {
+            Widget _child = child ?? Container();
+            return BlocListener<NotificationsBloc, NotificationsState>(
+              listener: (context, state) async {
+                if (state is NotificationsReceivedState) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      behavior: SnackBarBehavior.floating,
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(state.message.notification?.title ?? "<title>"),
+                          Text(state.message.notification?.body ?? "<body>"),
+                          Text("Type: ${state.notificationType.name}"),
+                        ],
                       ),
-                    );
-                  }
-                },
-                child: _child,
-              );
-            },
-            home: ContactsPage()),
+                    ),
+                  );
+                }
+              },
+              child: _child,
+            );
+          },
+          home: AnimationPage(),
+        ),
       ),
     );
   }
