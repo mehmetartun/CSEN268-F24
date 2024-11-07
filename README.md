@@ -68,6 +68,10 @@ Also important to note is that we reset the value of the `TextFormField` after s
     }
 ```
 
+We get the following result:
+
+![StreamBuilder Output](/assets/images/StreamBuilderDemo.gif)
+
 ### Setting up your environment before the lecture
 
 Each lecture is stored under a separate tag. In your computer do the following
