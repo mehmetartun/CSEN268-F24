@@ -31,6 +31,7 @@ The content in this repo follows the CSEN268 Fall24 Lecture at Santa Clara Unive
 - [Lecture 13 - 04](https://github.com/mehmetartun/CSEN268-F24/tree/L13.04) Implement Explicit Animations
 - [Lecture 13 - 05](https://github.com/mehmetartun/CSEN268-F24/tree/L13.05) Modify color property
 - [Lecture 14 - 00](https://github.com/mehmetartun/CSEN268-F24/tree/L14.00) Start Future Builder
+- [Lecture 14 - 01](https://github.com/mehmetartun/CSEN268-F24/tree/L14.01) Implemented FutureBuilder
 
 
 
