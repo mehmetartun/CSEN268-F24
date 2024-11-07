@@ -2,38 +2,9 @@
 
 [Table of Contents](/toc.md)
 
-## Lecture 13 - Starting point for Explicit Animations
+## Lecture 14 - Future Builder, Shimmer and StreamBuilder
 
-We will now modify the `color` property of the `Container()`. To to this we need to define our animation as `<Color>` and create the `Tween` accordingly. In this case we use a special class to interpolate between colors, `ColorTween` which returns a type `Animation<Color?>`. Therefore we modify our `animation` variable to be of type `Animation<Color?>`. We fix the container size to 180x180.
-```dart
-class _AnimationPageState extends State<AnimationPage>
-    with SingleTickerProviderStateMixin {
-  late AnimationController controller;
-  late Animation<Color?> animation;
-
-  @override
-  void initState() {
-    controller = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 3000));
-    animation = ColorTween(begin: Colors.yellow[700], end: Colors.blue[400])
-        .animate(controller)
-      ..addListener(() {
-        setState(() {});
-      })
-      ..addStatusListener((status) {
-        switch (status) {
-          default:
-            ScaffoldMessenger.of(context).hideCurrentSnackBar();
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(status.name)));
-        }
-      });
-    super.initState();
-  }
-```
-
-The resulting behavior is:
-![Animation](/assets/images/AnimationDemo2Gif.gif)
+In this lecture we will explore `FutureBuilder` and `StreamBuilder` as well as the `shimmer` package.
 
 ### Setting up your environment before the lecture
 

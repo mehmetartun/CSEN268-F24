@@ -107,7 +107,7 @@ class MyApp extends StatelessWidget {
               child: _child,
             );
           },
-          home: AnimationPage(),
+          home: GenericPage(title: "Future Builder"),
         ),
       ),
     );
