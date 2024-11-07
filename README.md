@@ -6,71 +6,68 @@
 ## Lecture 14 - FutureBuilder, StreamBuilder, Shimmer
 In this lecture we will look at asynchronous data and methods to display them in the UI. 
 
-### Step 2 - Implement StreamBuilder
-To simulate `StreamBuilder` we create a `cities` collection in `Firestore`. We will then create a stream to this collection and display any changes in the collection in realtime.
+### Step 3 - Implement Shimmer
+In the previous step we implemented the `StreamBuilder` to bring the content from the database. Shimmer allows you to display placeholders to prepare the user about the type of data the page is going to receive rather than showing a generic spinner.
 
-#### Building a collection in Firestore
-Our collection in Firestore looks like this:
-![Cities](/assets/images/CitiesCollection.png)
-
-#### Adding package for Firestore
+#### Add shimmer package
+We start by adding the package
 ```zsh
-flutter pub add cloud_firestore
+flutter pub add shimmer
 ```
+#### Building a widget with Shimmer
+In our case we will build 10 boxes with rounded corner as placeholders for the `'cities'` collection that will be returned. For shimmer to be effective visually:
+- The width of the shimmer object shall match the width of the expected content when it arrives
+- Similarly, height should roughly match as well.
+- For the number of lines, you can take 5-10 placeholders  to indicate we are expecting a list. The actual list could be 100 items...
 
-#### Creating a stream
-We create `StreamBuilderPage` in [stream_builder_page](/lib/pages/stream_builder_page.dart) as a stateless widget returning a `StreamBuilder` in the body of the Scaffold.
+```dart
+class ShimmerListWidget extends StatelessWidget {
+  const ShimmerListWidget({super.key});
 
-The `StreamBuilder` widget works similar to `FutureBuilder`. In this case we have a `stream` and whenever there is an update in the `stream`, the `builder` kicks in and rebuilds the widget. In our case the stream is pointing to a **collection** in the **Firestore** database and we are getting all the documents in that collection. In this case the collection is `'cities'`.
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.grey.shade100,
+        enabled: true,
+        child: Column(
+          children: List.generate(10, (index) {
+            return Container(
+              height: 15,
+              width: 200,
+              margin: EdgeInsets.all(3),
+              decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(2),
+                    ),
+                  ),
+                  color: Colors.white),
+            );
+          }),
+        ));
+  }
+}
+```
+#### Using the ShimmerListWidget
+
+We inject the widget in the `StreamBuilder`:
 ```dart
     StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         builder: (context, snapshot) {
         if (snapshot.hasData) {
-            return ListView(
-            shrinkWrap: true,
-            children: snapshot.data?.docs.map((doc) {
-                    return Text(doc.data()['name']);
-                }).toList() ??
-                [],
-            );
+            ...
         }
-        return CircularProgressIndicator();
+        return ShimmerListWidget();
         },
-        stream: FirebaseFirestore.instance
-            .collection('cities')
-            .snapshots(),
+        stream:...,
     ),
 ```
-StreamBuilder works on the same concept as the FutureBuilder, the `AsyncSnapshot`. We check whether the `snapshot` has data and we can then access the data of the snapshot. The data in this case will be of type `QuerySnapshot` which comes from the Firestore package. The `QuerySnapshot` has `docs` property which is a `List<QueryDocumentSnapshot>`. Therefore we call
-```dart
- snapshot.data?.docs.map((doc){ return Text(doc.data()['name']);});
-```
-The object `QueryDocumentSnapshot` has a `data()` method which exposes the data contained in the document as a `Map<String,dynamic>`. From this `Map` we select the `'name'` property which corresponds to the name of the city. In this the `doc.data()` will look like:
-```json
-{'name': 'London'}
-```
-If you want to get the ID of the document then you can access it as `doc.id`.
 
-#### The City entry widget
-To enter a new city name, we created a widget consisting of a `TextFormField` and an `OutlinedButton`. The interesting part of the widget is the `onSaved()` method where we add this value to the `'cities'` collection in the Firestore database.
-```dart
-    onSaved: (value) {
-    FirebaseFirestore.instance
-        .collection('cities')
-        .add({'name': value});
-    },
-```
-Also important to note is that we reset the value of the `TextFormField` after saving by calling `controller.clear()` of the `TextEditingController` attached to the `TextFormField`.
-```dart
-    if (_formKey.currentState?.validate() ?? false) {
-        _formKey.currentState?.save();
-        controller.clear();
-    }
-```
+Finally, we will see the following when the `stream` is loading:
 
-We get the following result:
+![Shimmer Demo](/assets/images/ShimmerDemo.gif)
 
-![StreamBuilder Output](/assets/images/StreamBuilderDemo.gif)
 
 ### Setting up your environment before the lecture
 
