@@ -2,6 +2,7 @@
 
 [Table of Contents](/toc.md)
 
+
 ## Lecture 14 - FutureBuilder, StreamBuilder, Shimmer
 In this lecture we will look at asynchronous data and methods to display them in the UI.
 
@@ -61,7 +62,6 @@ If the `snapshot` contains data, then we understand the `Future` has resolved. I
 ```
 The resulting view on the simulator:
 ![Future Builder Demo](/assets/images/FutureBuilder.gif)
-
 
 ### Setting up your environment before the lecture
 
