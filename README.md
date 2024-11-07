@@ -3,65 +3,69 @@
 [Table of Contents](/toc.md)
 
 ## Lecture 14 - FutureBuilder, StreamBuilder, Shimmer
-In this lecture we will look at asynchronous data and methods to display them in the UI.
+In this lecture we will look at asynchronous data and methods to display them in the UI. 
 
-### Future Builder
+### Step 2 - Implement StreamBuilder
+To simulate `StreamBuilder` we create a `cities` collection in `Firestore`. We will then create a stream to this collection and display any changes in the collection in realtime.
 
-We implement `FutureBuilder` widget to build result of an asynchronous operation. To test this, we build the `FutureBuilderPage` in [future_builder_page.dart](/lib/pages/future_builder_page.dart). 
+#### Building a collection in Firestore
+Our collection in Firestore looks like this:
+![Cities](/assets/images/CitiesCollection.png)
 
-### The Future
-
-We first define a function that generates a list of `User` objects in the future. To accomplish that we simply add a delay:
-```dart
-Future<List<User>> getData() async {
-  await Future.delayed(Duration(seconds: 3));
-  List<User> users;
-  users = List.generate(20, (index) {
-    return User.createMockUser();
-  });
-  return users;
-}
+#### Adding package for Firestore
+```zsh
+flutter pub add cloud_firestore
 ```
-This function will generate a list of `User` objects with a 3 second delay. When we call this function this will be our `Future` of type `List<User>`.
 
-### The FutureBuilder
+#### Creating a stream
+We create `StreamBuilderPage` in [stream_builder_page](/lib/pages/stream_builder_page.dart) as a stateless widget returning a `StreamBuilder` in the body of the Scaffold.
 
-This widget takes a `Future` as an argument it's builder than receives an update on the future via the `AsyncSnapshot` `snapshot` of type `<List<User>>`. We build two different widgets depending on whether the the `snapshot`'s `.hasData` property is `true` or `false`.
-
-If the `snapshot` contains data, then we understand the `Future` has resolved. If not, it is still working. Hence we show a `CircularProgressIndicator` until the `Future` resolves. Then we access the `data` property of the `snapshot` via `snapshot.data` (which is of type `<List<User>>`) and we display the `User` objects in a `Column`.
+The `StreamBuilder` widget works similar to `FutureBuilder`. In this case we have a `stream` and whenever there is an update in the `stream`, the `builder` kicks in and rebuilds the widget. In our case the stream is pointing to a **collection** in the **Firestore** database and we are getting all the documents in that collection. In this case the collection is `'cities'`.
 ```dart
-    body: SingleChildScrollView(
-    child: FutureBuilder(
-        future: getData(),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<User>> snapshot) {
-            if (snapshot.hasData) {
-            return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: snapshot.data!.map((user) {
-                return UserListTile(user: user);
-                }).toList(),
+    StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+        builder: (context, snapshot) {
+        if (snapshot.hasData) {
+            return ListView(
+            shrinkWrap: true,
+            children: snapshot.data?.docs.map((doc) {
+                    return Text(doc.data()['name']);
+                }).toList() ??
+                [],
             );
-            } else {
-            return Container(
-                width: double.infinity,
-                child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                    Text("Fetching data"),
-                    SizedBox(height: 20),
-                    CircularProgressIndicator(),
-                ],
-                ),
-            );
-            }
-        }),
+        }
+        return CircularProgressIndicator();
+        },
+        stream: FirebaseFirestore.instance
+            .collection('cities')
+            .snapshots(),
     ),
 ```
-The resulting view on the simulator:
-![Future Builder Demo](/assets/images/FutureBuilder.gif)
+StreamBuilder works on the same concept as the FutureBuilder, the `AsyncSnapshot`. We check whether the `snapshot` has data and we can then access the data of the snapshot. The data in this case will be of type `QuerySnapshot` which comes from the Firestore package. The `QuerySnapshot` has `docs` property which is a `List<QueryDocumentSnapshot>`. Therefore we call
+```dart
+ snapshot.data?.docs.map((doc){ return Text(doc.data()['name']);});
+```
+The object `QueryDocumentSnapshot` has a `data()` method which exposes the data contained in the document as a `Map<String,dynamic>`. From this `Map` we select the `'name'` property which corresponds to the name of the city. In this the `doc.data()` will look like:
+```json
+{'name': 'London'}
+```
+If you want to get the ID of the document then you can access it as `doc.id`.
 
+#### The City entry widget
+To enter a new city name, we created a widget consisting of a `TextFormField` and an `OutlinedButton`. The interesting part of the widget is the `onSaved()` method where we add this value to the `'cities'` collection in the Firestore database.
+```dart
+    onSaved: (value) {
+    FirebaseFirestore.instance
+        .collection('cities')
+        .add({'name': value});
+    },
+```
+Also important to note is that we reset the value of the `TextFormField` after saving by calling `controller.clear()` of the `TextEditingController` attached to the `TextFormField`.
+```dart
+    if (_formKey.currentState?.validate() ?? false) {
+        _formKey.currentState?.save();
+        controller.clear();
+    }
+```
 
 ### Setting up your environment before the lecture
 
