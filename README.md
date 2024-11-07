@@ -59,7 +59,8 @@ If the `snapshot` contains data, then we understand the `Future` has resolved. I
         }),
     ),
 ```
-
+The resulting view on the simulator:
+![Future Builder Demo](/assets/images/FutureBuilder.gif)
 
 
 ### Setting up your environment before the lecture
