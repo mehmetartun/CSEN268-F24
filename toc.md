@@ -35,6 +35,7 @@ The content in this repo follows the CSEN268 Fall24 Lecture at Santa Clara Unive
 - [Lecture 14 - 02](https://github.com/mehmetartun/CSEN268-F24/tree/L14.02) Implemented StreamBuilder
 - [Lecture 14 - 03](https://github.com/mehmetartun/CSEN268-F24/tree/L14.03) Implemented Shimmer
 - [Lecture 14 - 04](https://github.com/mehmetartun/CSEN268-F24/tree/L14.04) Implemented Firestore Interactions
+- [Lecture 15 - 00](https://github.com/mehmetartun/CSEN268-F24/tree/L15.00) Start Cloud Functions
 
 
 
