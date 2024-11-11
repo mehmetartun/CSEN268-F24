@@ -3,6 +3,7 @@ import 'package:CSEN268_F24/firebase_options.dart';
 import 'package:CSEN268_F24/pages/alert_page.dart';
 import 'package:CSEN268_F24/pages/animation_page.dart';
 import 'package:CSEN268_F24/pages/contacts/contacts_page.dart';
+import 'package:CSEN268_F24/pages/data/data_page.dart';
 import 'package:CSEN268_F24/pages/future_builder_page.dart';
 import 'package:CSEN268_F24/pages/generic_page.dart';
 import 'package:CSEN268_F24/pages/messaging_page.dart';
@@ -109,8 +110,7 @@ class MyApp extends StatelessWidget {
               child: _child,
             );
           },
-
-          home: StreamBuilderPage(),
+          home: DataPage(),
         ),
       ),
     );
