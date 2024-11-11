@@ -114,12 +114,11 @@ Select **Add Key**, then **Create New Key**, and then select **JSON**.
 
 [JSON](/assets/images/CreateJsonKey.png)
 
-Save the file to your `functions` directory. And add this file to your `.gitignore` file. 
-This file should not be in the public domain!
+Save the file to your `functions` directory as `google_service_account.json`. And add this file to the `.gitignore` file in the `functions` directory. This file should not be in the public domain!
 
 Finally, we create a shell script to run the emulator for functions
 ```zsh
-export GOOGLE_APPLICATION_CREDENTIALS="/Users/mehmetartun/Development/csen268/CSEN268-F24/functions/fir-messaging-8b691-18ea76b9df31.json"
+export GOOGLE_APPLICATION_CREDENTIALS="/Users/mehmetartun/Development/csen268/CSEN268-F24/functions/google_service_account.json"
 firebase emulators:start --only functions
 ```
 In this repo we created [emulator_functions.sh](/emulator_functions.sh) and made it executable by running `chmod 755 emulator_functions.sh`.
@@ -164,8 +163,6 @@ it is then invoked by
   }
 ```
 Note that the argument to the `.call()` method is a `Map` and the returned result is the `data` property of the `HttpsCallableResult`.
-
-
 
 ### Setting up your environment before the lecture
 
