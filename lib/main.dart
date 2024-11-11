@@ -1,14 +1,6 @@
 import 'package:CSEN268_F24/blocs/notifications/bloc/notifications_bloc.dart';
 import 'package:CSEN268_F24/firebase_options.dart';
-import 'package:CSEN268_F24/pages/alert_page.dart';
-import 'package:CSEN268_F24/pages/animation_page.dart';
-import 'package:CSEN268_F24/pages/contacts/contacts_page.dart';
-import 'package:CSEN268_F24/pages/data/data_page.dart';
 import 'package:CSEN268_F24/pages/functions_demo.dart';
-import 'package:CSEN268_F24/pages/future_builder_page.dart';
-import 'package:CSEN268_F24/pages/generic_page.dart';
-import 'package:CSEN268_F24/pages/messaging_page.dart';
-import 'package:CSEN268_F24/pages/stream_builder_page.dart';
 import 'package:CSEN268_F24/repositories/authentication/authentication_repository.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_app_installations/firebase_app_installations.dart';

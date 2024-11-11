@@ -19,7 +19,7 @@ class _FunctionsDemoPageState extends State<FunctionsDemoPage> {
   }
 
   void callHelloWorld() async {
-    HttpsCallableResult ret = await helloWorld.call({});
+    HttpsCallableResult ret = await helloWorld.call();
     result = ret.data['message'];
     setState(() {});
   }

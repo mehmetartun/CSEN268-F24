@@ -21,5 +21,6 @@ const logger = require("firebase-functions/logger");
 
 exports.helloWorld = onCall(async (request) => {
     logger.info("Call to Hello World Function.");
+    console.log(request.data);
     return {message: "Hello World"};
 })
