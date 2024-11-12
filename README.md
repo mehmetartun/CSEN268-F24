@@ -15,6 +15,15 @@ We add Firestore to our [index.js](/functions/index.js) file by adding this at t
 const {initializeApp} = require("firebase-admin/app");
 const {getFirestore} = require("firebase-admin/firestore");
 ```
+#### Syntax for Cloud Functions
+The functions callable from the App use the `onCall` method. The syntax is:
+```js
+exports.functionName = onCall(async (request)=>{
+  ...
+})
+```
+Here the `request` object has a number of members. One of these is `data` which contains the parameters passed from the App. The other one is `auth` which gives the info on the authenticated user making the call.
+
 Next we create a function to write the data that's sent from the Flutter App:
 ```js
 exports.addData = onCall(async (request)=> {
