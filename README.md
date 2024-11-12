@@ -9,7 +9,7 @@ We explore Cloud Functions in Firebase using NodeJS
 ### Setting up Cloud Functions in your Project
 Start with the command `firebase init`:
 ```zsh
-MA@MBP:~/Development/csen268/CSEN268-F24> firebase init
+> firebase init
 
      ######## #### ########  ######## ########     ###     ######  ########
      ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
@@ -19,7 +19,7 @@ MA@MBP:~/Development/csen268/CSEN268-F24> firebase init
 
 You're about to initialize a Firebase project in this directory:
 
-  /Users/mehmetartun/Development/csen268/CSEN268-F24
+  /path/to/your/project/directory
 
 Before we get started, keep in mind:
 
@@ -40,7 +40,7 @@ and select `Functions: Configure a Cloud Function...`
 ```zsh
 You're about to initialize a Firebase project in this directory:
 
-  /Users/mehmetartun/Development/csen268/CSEN268-F24
+  /path/to/your/project/directory
 
 Before we get started, keep in mind:
 
@@ -61,7 +61,7 @@ but for now we'll just set up a default project.
   Add Firebase to an existing Google Cloud Platform project 
   Don't set up a default project 
 ```
-Select `Use an existing project` and `Javascript` for the language. Say `No` to `ESLint`. Say `Yes` to installing dependencies.
+Select `Use an existing project` and `Javascript` for the language. Say `No` to `ESLint`. Say `Yes` to install dependencies.
 ```zsh
 ? Select a default Firebase project for this directory: fir-messaging-8b691 (firebase-messaging)
 i  Using project fir-messaging-8b691 (firebase-messaging)
@@ -74,7 +74,7 @@ with sample code pre-configured.
 See https://firebase.google.com/docs/functions/organize-functions for
 more information on organizing your functions using codebases.
 
-Functions can be deployed with firebase deploy.
+Functions can be deployed with Firebase deploy.
 
 ? What language would you like to use to write Cloud Functions? JavaScript
 ? Do you want to use ESLint to catch probable bugs and enforce style? No
@@ -99,14 +99,14 @@ We need to create a service account to connect to the cloud functions. Go to the
 
 [Service Accounts](https://console.cloud.google.com/iam-admin/serviceaccounts)
 
-And under your project you will see
+And under your project, you will see
 
 [AppEngineService](/assets/images/ServiceAccountSetup.png) 
 
 Open the item that says **App Engine Default Service Account** by clicking on the 
 context menu on the right and selecting **Manage Keys**. 
 
-In this page:
+On this page:
 
 [Add Key](/assets/images/AddKeyPage.png)
 
@@ -118,7 +118,7 @@ Save the file to your `functions` directory as `google_service_account.json`. An
 
 Finally, we create a shell script to run the emulator for functions
 ```zsh
-export GOOGLE_APPLICATION_CREDENTIALS="/Users/mehmetartun/Development/csen268/CSEN268-F24/functions/google_service_account.json"
+export GOOGLE_APPLICATION_CREDENTIALS="/path/to/your/project/directory/functions/google_service_account.json"
 firebase emulators:start --only functions
 ```
 In this repo we created [emulator_functions.sh](/emulator_functions.sh) and made it executable by running `chmod 755 emulator_functions.sh`.
