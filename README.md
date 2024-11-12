@@ -49,13 +49,13 @@ const {
  const userId = event.data.params.userId;
  ```
  
- It could as well be the case where you have a `user` that adds a `car` to this `cars` collection. In this case you could match a car by `carId` and at to the `log` collection:
+ It could as well be the case where you have a `user` that adds a `car` to this `cars` collection. In this case you could match a car by `carId` and add to the `log` collection:
  ```js
   exports.onCarAdded = onDocumentCreated("/users_test/{userId}/cars/{carId}", async (event) => {
     await getFirestore().collection('log')
     .add({
         'userId':event.params.userId,
-        'carId': event.params.licencePlate,
+        'carId': event.params.carId,
         'createdAt':event.data.createTime,
     });
 });
