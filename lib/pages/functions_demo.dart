@@ -10,11 +10,11 @@ class FunctionsDemoPage extends StatefulWidget {
 
 class _FunctionsDemoPageState extends State<FunctionsDemoPage> {
   final HttpsCallable helloWorld =
-      FirebaseFunctions.instance.httpsCallable('helloWorld');
+      FirebaseFunctions.instance.httpsCallable('misc-helloWorld');
   final HttpsCallable addData =
-      FirebaseFunctions.instance.httpsCallable('addData');
+      FirebaseFunctions.instance.httpsCallable('db-addData');
   final HttpsCallable getData =
-      FirebaseFunctions.instance.httpsCallable('getData');
+      FirebaseFunctions.instance.httpsCallable('db-getData');
   String? path;
 
   @override
