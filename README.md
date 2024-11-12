@@ -4,11 +4,13 @@
 
 
 ## Lecture 15 - Cloud Functions and Serverless Computing
-We explore Cloud Functions in Firebase using NodeJS
+We explore Cloud Functions in Firebase using NodeJS.
 
 ### Step 4 - Organizing Cloud Functions
 
+
 It's common practice to organize the cloud functions by namespace for easier management. For this, we create two namespaces. One will be called `misc` and the other `db` referring to miscellaneous functions and database functions respectively. Our `helloWorld` will fall in the `misc` category and `addData` and `getData` will fall in the `db` category. We shall also create an `init.js` file to do all initializations, especially Firebase.
+
 
 #### Modify the `index.js` file
 ```js
@@ -83,17 +85,15 @@ To deploy functions we have the option to specify only the namespace to deploy a
 firebase deploy --only functions:db
 ```
 
-
-
 ### Setting up your environment before the lecture
 
-Each lecture is stored under a separate tag. In your computer do the following
+Each lecture is stored under a separate tag. On your computer do the following
 
     git clone <Repository Name>
     git pull
     git tag -l
 
-This will list you all the tags in the repository such as
+This will list all the tags in the repository such as
 
     Lecture4
     Lecture5
@@ -108,9 +108,9 @@ In order to pull a particular tag to your computer
 
 1. Go to this link. [idx.dev](https://idx.google.com/import?url=https://github.com/mehmetartun/CSEN268-F24)
 2. Name your project (default value is fine)
-3. Click Flutter Project checkbox
+3. Click the Flutter Project checkbox
 4. Wait for the setup to continue
-5. Open the terminal and pull requisite tag from the repo by
+5. Open the terminal and pull the requisite tag from the repo by
 ```zsh
 git pull
 git tag -l
