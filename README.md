@@ -4,17 +4,17 @@
 
 
 ## Lecture 15 - Cloud Functions and Serverless Computing
-We explore Cloud Functions in Firebase using NodeJS
+We explore Cloud Functions in Firebase using NodeJS.
 
 ### Setting up your environment before the lecture
 
-Each lecture is stored under a separate tag. In your computer do the following
+Each lecture is stored under a separate tag. On your computer do the following
 
     git clone <Repository Name>
     git pull
     git tag -l
 
-This will list you all the tags in the repository such as
+This will list all the tags in the repository such as
 
     Lecture4
     Lecture5
@@ -29,9 +29,9 @@ In order to pull a particular tag to your computer
 
 1. Go to this link. [idx.dev](https://idx.google.com/import?url=https://github.com/mehmetartun/CSEN268-F24)
 2. Name your project (default value is fine)
-3. Click Flutter Project checkbox
+3. Click the Flutter Project checkbox
 4. Wait for the setup to continue
-5. Open the terminal and pull requisite tag from the repo by
+5. Open the terminal and pull the requisite tag from the repo by
 ```zsh
 git pull
 git tag -l
