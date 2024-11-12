@@ -101,18 +101,18 @@ We need to create a service account to connect to the cloud functions. Go to the
 
 And under your project, you will see
 
-[AppEngineService](/assets/images/ServiceAccountSetup.png) 
+![AppEngineService](/assets/images/ServiceAccountSetup.png) 
 
 Open the item that says **App Engine Default Service Account** by clicking on the 
 context menu on the right and selecting **Manage Keys**. 
 
 On this page:
 
-[Add Key](/assets/images/AddKeyPage.png)
+![Add Key](/assets/images/AddKeyPage.png)
 
 Select **Add Key**, then **Create New Key**, and then select **JSON**.
 
-[JSON](/assets/images/CreateJsonKey.png)
+![JSON](/assets/images/CreateJsonKey.png)
 
 Save the file to your `functions` directory as `google_service_account.json`. And add this file to the `.gitignore` file in the `functions` directory. This file should not be in the public domain!
 
