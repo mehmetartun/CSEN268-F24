@@ -110,7 +110,7 @@ class MyApp extends StatelessWidget {
               child: _child,
             );
           },
-          home: DataPage(),
+          home: GenericPage(title: "Cloud Functions"),
         ),
       ),
     );
