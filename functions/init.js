@@ -1,14 +1,33 @@
 const {logger} = require("firebase-functions/v2");
-const {onRequest} = require("firebase-functions/v2/https");
+const {
+    onRequest,
+    onCall,
+    HttpsError
+} = require("firebase-functions/v2/https");
 const {initializeApp} = require("firebase-admin/app");
-const {getFirestore} = require("firebase-admin/firestore");
-const {onCall} = require("firebase-functions/v2/https");
+const {getFirestore, Timestamp } = require("firebase-admin/firestore");
+const {
+    onDocumentWritten,
+    onDocumentCreated,
+    onDocumentDeleted,
+    onDocumentUpdated,
+    Change,
+    FirestoreEvent
+} = require("firebase-functions/v2/firestore");
 
 initializeApp()
 
 module.exports  = {
     onRequest,
-    getFirestore,
     onCall,
+    HttpsError,
+    getFirestore,
+    Timestamp,
+    onDocumentWritten,
+    onDocumentCreated,
+    onDocumentDeleted,
+    onDocumentUpdated,
+    Change,
+    FirestoreEvent,
     logger
 }

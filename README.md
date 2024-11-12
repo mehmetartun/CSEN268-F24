@@ -6,84 +6,62 @@
 ## Lecture 15 - Cloud Functions and Serverless Computing
 We explore Cloud Functions in Firebase using NodeJS.
 
-### Step 4 - Organizing Cloud Functions
+### Step 5 - Firestore triggers
+As part of the serverless computing appeal of Firebase, we can create **Firestore triggers**. These are can be thought of listeners to the Firestore database which trigger a cloud function when a specified event occurs.
 
+Let's consider that we want to create a `log` collection where we enter the path to the `user` document as well as the time it was created. This can be facilitated by the `onDocumentCreated`.
 
-It's common practice to organize the cloud functions by namespace for easier management. For this, we create two namespaces. One will be called `misc` and the other `db` referring to miscellaneous functions and database functions respectively. Our `helloWorld` will fall in the `misc` category and `addData` and `getData` will fall in the `db` category. We shall also create an `init.js` file to do all initializations, especially Firebase.
-
-
-#### Modify the `index.js` file
+Import this in the [init.js](/functions/init.js) document:
 ```js
-exports.misc = require('./misc.js');
-exports.db = require('./db.js');
-```
-
-#### Create the `init.js`, `misc.js`, and `db.js` files
-```js
-const {logger} = require("firebase-functions/v2");
-const {onRequest} = require("firebase-functions/v2/https");
-const {initializeApp} = require("firebase-admin/app");
-const {getFirestore} = require("firebase-admin/firestore");
-const {onCall} = require("firebase-functions/v2/https");
-
-initializeApp()
+const {
+    ...
+    onDocumentCreated,
+    ...
+} = require("firebase-functions/v2/firestore");
 
 module.exports  = {
-    onRequest,
-    getFirestore,
-    onCall,
-    logger
+    ...
+    onDocumentCreated,
+    ...
 }
 ```
-
-Then for the namespace `misc` we have [misc.js](/functions/misc.js):
+and import them into [db.js](/functions/db.js):
 ```js
 const { 
-    logger,
-    onCall,
-} = require("./init.js");
-
-exports.helloWorld = onCall(async (request) => {
-    logger.info("Call to Hello World Function.");
-    console.log(request.auth);
-    return {message: "Hello World"};
-})
-```
-And for the namespace `db` we have [db.js](/functions/db.js):
-```js
-const { 
-    logger,
-    getFirestore,
-    onCall
+    ...
+    onDocumentCreated,
  } = require("./init.js");
+ ```
 
- exports.addData = onCall(async (request)=> {
-    const collection = request.data['collection'];
-    const map = request.data['map'];
-    var documentReference = await getFirestore().collection(collection).add(map);
-    return {'path': documentReference.path, 'id': documentReference.id};
-})
+ We then create a function:
+ ```js
+ exports.onUserCreated = onDocumentCreated("/users_test/{userId}", async (event) => {
+    await getFirestore().collection('log')
+    .add({
+        'userPath':event.data.ref.path,
+        'createdAt':event.data.createTime,
+        'id':event.data.ref.id
+    });
+});
+ ```
+ Here we look for a pattern of the form `/users_test/userId` and we can get a handle on the specific `userId` of the user by:
+ ```js
+ const userId = event.data.params.userId;
+ ```
+ 
+ It could as well be the case where you have a `user` that adds a `car` to this `cars` collection. In this case you could match a car by `carId` and at to the `log` collection:
+ ```js
+  exports.onCarAdded = onDocumentCreated("/users_test/{userId}/cars/{carId}", async (event) => {
+    await getFirestore().collection('log')
+    .add({
+        'userId':event.params.userId,
+        'carId': event.params.licencePlate,
+        'createdAt':event.data.createTime,
+    });
+});
+ ```
 
-exports.getData = onCall(async (request)=> {
-    const path = request.data['path'];
-    var doc = await getFirestore().doc(path).get();
-    return doc.data();
-})
-```
 
-#### Calling the functions with the new namespace
-With the new namespace the calling of the functions become slightly different
-```dart
-  final HttpsCallable helloWorld =
-      FirebaseFunctions.instance.httpsCallable('misc-helloWorld');
-```
-where the function name gets `<namespace>-` in front.
-
-#### Deploying functions with the namespace
-To deploy functions we have the option to specify only the namespace to deploy all functions in that namespace and not others:
-```zsh
-firebase deploy --only functions:db
-```
 
 ### Setting up your environment before the lecture
 
