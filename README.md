@@ -6,43 +6,32 @@
 ## Lecture 15 - Cloud Functions and Serverless Computing
 We explore Cloud Functions in Firebase using NodeJS
 
-### Step 2 - Interacting with Firestore
-In this section we will interact with Firestore from Cloud Functions
+### Step 3 - Deploying Cloud Functions
+To be able to deploy Cloud Functions, you will need the **Blaze** billing plan. More information on that can be found here [Firebase Pricing Plans](https://firebase.google.com/docs/projects/billing/firebase-pricing-plans)
 
-#### Add Firestore
-We add Firestore to our [index.js](/functions/index.js) file by adding this at the top:
-```js
-const {initializeApp} = require("firebase-admin/app");
-const {getFirestore} = require("firebase-admin/firestore");
-```
-#### Syntax for Cloud Functions
-The functions callable from the App use the `onCall` method. The syntax is:
-```js
-exports.functionName = onCall(async (request)=>{
-  ...
-})
-```
-Here the `request` object has a number of members. One of these is `data` which contains the parameters passed from the App. The other one is `auth` which gives the info on the authenticated user making the call.
+Once you've turned on the **Blaze** plan you are ready to deploy your functions
 
-Next we create a function to write the data that's sent from the Flutter App:
+#### Deploying Cloud Functions
+Before that make sure that you have the correct `node` version specified in the [package.json](/functions/package.json) file.
 ```js
-exports.addData = onCall(async (request)=> {
-    const collection = request.data['collection'];
-    const map = request.data['map'];
-    var documentReference = await getFirestore().collection(collection).add(map);
-    return {'path': documentReference.path, 'id': documentReference.id};
-})
+  "engines": {
+    "node": "20"
+  },
 ```
 
-Finally we create a function which reads data from a `path` and returns to the App:
-```js
-exports.getData = onCall(async (request)=> {
-    const path = request.data['path'];
-    var doc = await getFirestore().doc(path).get();
-    return doc.data();
-})
+The deployment of cloud functions is done with the following command:
+```zsh
+firebase deploy --only functions
 ```
+With this, all existing functions will be deployed. 
 
+If you only want to deploy a specific function:
+```zsh
+firebase deploy --only functions:<function-name>
+```
+A full list of the functions can be seen at `https://console.cloud.google.com/functions/list?project=<your-project-id>` where you can see the contents of the function, view logs, increase memory and runtime etc:
+
+![Cloud Functions](/assets/images/CloudFunctionsView.png)
 
 ### Setting up your environment before the lecture
 
