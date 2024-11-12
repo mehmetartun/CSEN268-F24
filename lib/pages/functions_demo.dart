@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +37,7 @@ class _FunctionsDemoPageState extends State<FunctionsDemoPage> {
 
   void callAddData() async {
     HttpsCallableResult ret = await addData.call({
-      'collection': 'user_test',
+      'collection': 'users_test',
       'map': {'name': 'John Doe', 'id': 123}
     });
     path = ret.data['path'];

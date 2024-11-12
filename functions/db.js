@@ -1,7 +1,13 @@
+
 const { 
     logger,
     getFirestore,
-    onCall
+    FirestoreEvent,
+    Timestamp,
+    Change,
+    onCall,
+    onDocumentWritten,
+    onDocumentCreated,
  } = require("./init.js");
 
  exports.addData = onCall(async (request)=> {
@@ -16,3 +22,12 @@ exports.getData = onCall(async (request)=> {
     var doc = await getFirestore().doc(path).get();
     return doc.data();
 })
+
+exports.onUserCreated = onDocumentCreated("/users_test/{userId}", async (event) => {
+    await getFirestore().collection('log')
+    .add({
+        'userPath':event.data.ref.path,
+        'createdAt':event.data.createTime,
+        'id':event.data.ref.id
+    });
+});
