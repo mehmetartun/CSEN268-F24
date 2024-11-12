@@ -43,6 +43,23 @@ exports.getData = onCall(async (request)=> {
 })
 ```
 
+#### Calling from Flutter
+To call these functions from Flutter we pass a `Map` for the content of the document we're creating, in this case a **user**, as well as the name of the collection where this will be inserted. In the retrieval, we receive the result in the `.data` property of the `HttpsCallableResult`.
+```dart
+  void callAddData() async {
+    HttpsCallableResult ret = await addData.call({
+      'collection': 'user_test',
+      'map': {'name': 'John Doe', 'id': 123}
+    });
+    path = ret.data['path'];
+    snack("path: ${ret.data['path']} id: ${ret.data['id']}");
+  }
+
+  void callGetData() async {
+    HttpsCallableResult ret = await getData.call({'path': path});
+    snack("name: ${ret.data['name']}   id: ${ret.data['id']}");
+  }
+```
 
 ### Setting up your environment before the lecture
 
