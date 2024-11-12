@@ -10,18 +10,42 @@ class FunctionsDemoPage extends StatefulWidget {
 
 class _FunctionsDemoPageState extends State<FunctionsDemoPage> {
   final HttpsCallable helloWorld =
-      FirebaseFunctions.instance.httpsCallable('helloWorld');
-  String? result;
+      FirebaseFunctions.instance.httpsCallable('misc-helloWorld');
+  final HttpsCallable addData =
+      FirebaseFunctions.instance.httpsCallable('db-addData');
+  final HttpsCallable getData =
+      FirebaseFunctions.instance.httpsCallable('db-getData');
+  String? path;
 
   @override
   void initState() {
     super.initState();
   }
 
+  void snack(String text) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(text),
+    ));
+  }
+
   void callHelloWorld() async {
     HttpsCallableResult ret = await helloWorld.call();
-    result = ret.data['message'];
-    setState(() {});
+    snack(ret.data['message']);
+  }
+
+  void callAddData() async {
+    HttpsCallableResult ret = await addData.call({
+      'collection': 'user_test',
+      'map': {'name': 'John Doe', 'id': 123}
+    });
+    path = ret.data['path'];
+    snack("path: ${ret.data['path']} id: ${ret.data['id']}");
+  }
+
+  void callGetData() async {
+    HttpsCallableResult ret = await getData.call({'path': path});
+    snack("name: ${ret.data['name']}   id: ${ret.data['id']}");
   }
 
   @override
@@ -39,7 +63,18 @@ class _FunctionsDemoPageState extends State<FunctionsDemoPage> {
               },
               child: Text("Call helloWorld"),
             ),
-            Text("Result is: $result"),
+            FilledButton(
+              onPressed: () {
+                callAddData();
+              },
+              child: Text("Call addData (user)"),
+            ),
+            FilledButton(
+              onPressed: () {
+                callGetData();
+              },
+              child: Text("Call getData (path of user)"),
+            ),
           ],
         ),
       ),

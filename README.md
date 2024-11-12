@@ -6,163 +6,84 @@
 ## Lecture 15 - Cloud Functions and Serverless Computing
 We explore Cloud Functions in Firebase using NodeJS.
 
-### Setting up Cloud Functions in your Project
-Start with the command `firebase init`:
-```zsh
-> firebase init
+### Step 4 - Organizing Cloud Functions
 
-     ######## #### ########  ######## ########     ###     ######  ########
-     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
-     ######    ##  ########  ######   ########  #########  ######  ######
-     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
-     ##       #### ##     ## ######## ########  ##     ##  ######  ########
 
-You're about to initialize a Firebase project in this directory:
+It's common practice to organize the cloud functions by namespace for easier management. For this, we create two namespaces. One will be called `misc` and the other `db` referring to miscellaneous functions and database functions respectively. Our `helloWorld` will fall in the `misc` category and `addData` and `getData` will fall in the `db` category. We shall also create an `init.js` file to do all initializations, especially Firebase.
 
-  /path/to/your/project/directory
 
-Before we get started, keep in mind:
-
-  * You are initializing within an existing Firebase project directory
-
-? Which Firebase features do you want to set up for this directory? Press Space to select features, 
-then Enter to confirm your choices. (Press <space> to select, <a> to toggle all, <i> to invert 
-selection, and <enter> to proceed)
- ◯ Data Connect: Set up a Firebase Data Connect service
- ◯ Firestore: Configure security rules and indexes files for Firestore
- ◯ Genkit: Setup a new Genkit project with Firebase
-❯◉ Functions: Configure a Cloud Functions directory and its files
- ◯ Hosting: Configure files for Firebase Hosting and (optionally) set up GitHub Action deploys
- ◯ Storage: Configure a security rules file for Cloud Storage
- ◯ Emulators: Set up local emulators for Firebase products
-```
-and select `Functions: Configure a Cloud Function...`
-```zsh
-You're about to initialize a Firebase project in this directory:
-
-  /path/to/your/project/directory
-
-Before we get started, keep in mind:
-
-  * You are initializing within an existing Firebase project directory
-
-? Which Firebase features do you want to set up for this directory? Press Space to select features, 
-then Enter to confirm your choices. Functions: Configure a Cloud Functions directory and its files
-
-=== Project Setup
-
-First, let's associate this project directory with a Firebase project.
-You can create multiple project aliases by running firebase use --add, 
-but for now we'll just set up a default project.
-
-? Please select an option: (Use arrow keys)
-❯ Use an existing project 
-  Create a new project 
-  Add Firebase to an existing Google Cloud Platform project 
-  Don't set up a default project 
-```
-Select `Use an existing project` and `Javascript` for the language. Say `No` to `ESLint`. Say `Yes` to install dependencies.
-```zsh
-? Select a default Firebase project for this directory: fir-messaging-8b691 (firebase-messaging)
-i  Using project fir-messaging-8b691 (firebase-messaging)
-
-=== Functions Setup
-Let's create a new codebase for your functions.
-A directory corresponding to the codebase will be created in your project
-with sample code pre-configured.
-
-See https://firebase.google.com/docs/functions/organize-functions for
-more information on organizing your functions using codebases.
-
-Functions can be deployed with Firebase deploy.
-
-? What language would you like to use to write Cloud Functions? JavaScript
-? Do you want to use ESLint to catch probable bugs and enforce style? No
-✔  Wrote functions/package.json
-✔  Wrote functions/index.js
-✔  Wrote functions/.gitignore
-? Do you want to install dependencies with npm now? Yes
-added 480 packages, and audited 481 packages in 11s
-51 packages are looking for funding
-  run `npm fund` for details
-
-found 0 vulnerabilities
-
-i  Writing configuration info to firebase.json...
-i  Writing project information to .firebaserc...
-
-✔  Firebase initialization complete!
-```
-
-### Setting up Emulator
-We need to create a service account to connect to the cloud functions. Go to the link:
-
-[Service Accounts](https://console.cloud.google.com/iam-admin/serviceaccounts)
-
-And under your project, you will see
-
-[AppEngineService](/assets/images/ServiceAccountSetup.png) 
-
-Open the item that says **App Engine Default Service Account** by clicking on the 
-context menu on the right and selecting **Manage Keys**. 
-
-On this page:
-
-[Add Key](/assets/images/AddKeyPage.png)
-
-Select **Add Key**, then **Create New Key**, and then select **JSON**.
-
-[JSON](/assets/images/CreateJsonKey.png)
-
-Save the file to your `functions` directory as `google_service_account.json`. And add this file to the `.gitignore` file in the `functions` directory. This file should not be in the public domain!
-
-Finally, we create a shell script to run the emulator for functions
-```zsh
-export GOOGLE_APPLICATION_CREDENTIALS="/path/to/your/project/directory/functions/google_service_account.json"
-firebase emulators:start --only functions
-```
-In this repo we created [emulator_functions.sh](/emulator_functions.sh) and made it executable by running `chmod 755 emulator_functions.sh`.
-
-### Importing Cloud Functions package and setting up the Flutter code
-To add cloud functions:
-```zsh
-flutter pub add cloud_functions
-```
-and in your `main.dart` add:
-```dart
-FirebaseFunctions.instance.useFunctionsEmulator("localhost", 5001);
-```
-
-### Writing your first function
-In the [index.js](/functions/index.js) file add the import:
+#### Modify the `index.js` file
 ```js
+exports.misc = require('./misc.js');
+exports.db = require('./db.js');
+```
+
+#### Create the `init.js`, `misc.js`, and `db.js` files
+```js
+const {logger} = require("firebase-functions/v2");
+const {onRequest} = require("firebase-functions/v2/https");
+const {initializeApp} = require("firebase-admin/app");
+const {getFirestore} = require("firebase-admin/firestore");
 const {onCall} = require("firebase-functions/v2/https");
+
+initializeApp()
+
+module.exports  = {
+    onRequest,
+    getFirestore,
+    onCall,
+    logger
+}
 ```
-and our first function is:
+
+Then for the namespace `misc` we have [misc.js](/functions/misc.js):
 ```js
+const { 
+    logger,
+    onCall,
+} = require("./init.js");
+
 exports.helloWorld = onCall(async (request) => {
     logger.info("Call to Hello World Function.");
-    return "Hello World";
+    console.log(request.auth);
+    return {message: "Hello World"};
 })
 ```
-It simply returns a string and also enters info into the logs.
+And for the namespace `db` we have [db.js](/functions/db.js):
+```js
+const { 
+    logger,
+    getFirestore,
+    onCall
+ } = require("./init.js");
 
-### Accessing Cloud Functions from Flutter App
-To access the Cloud Functions we create a page [functions_demo.dart](/lib/pages/functions_demo.dart).
-The callable function is defined as:
+ exports.addData = onCall(async (request)=> {
+    const collection = request.data['collection'];
+    const map = request.data['map'];
+    var documentReference = await getFirestore().collection(collection).add(map);
+    return {'path': documentReference.path, 'id': documentReference.id};
+})
+
+exports.getData = onCall(async (request)=> {
+    const path = request.data['path'];
+    var doc = await getFirestore().doc(path).get();
+    return doc.data();
+})
+```
+
+#### Calling the functions with the new namespace
+With the new namespace the calling of the functions become slightly different
 ```dart
   final HttpsCallable helloWorld =
-      FirebaseFunctions.instance.httpsCallable('helloWorld');
+      FirebaseFunctions.instance.httpsCallable('misc-helloWorld');
 ```
-it is then invoked by
-```dart
-  void callHelloWorld() async {
-    HttpsCallableResult ret = await helloWorld.call({});
-    result = ret.data['message'];
-    setState(() {});
-  }
+where the function name gets `<namespace>-` in front.
+
+#### Deploying functions with the namespace
+To deploy functions we have the option to specify only the namespace to deploy all functions in that namespace and not others:
+```zsh
+firebase deploy --only functions:db
 ```
-Note that the argument to the `.call()` method is a `Map` and the returned result is the `data` property of the `HttpsCallableResult`.
 
 ### Setting up your environment before the lecture
 
