@@ -39,6 +39,7 @@ The content in this repo follows the CSEN268 Fall24 Lecture at Santa Clara Unive
 - [Lecture 15 - 01](https://github.com/mehmetartun/CSEN268-F24/tree/L15.01) Added Cloud Functions to Project, Hello World
 - [Lecture 15 - 02](https://github.com/mehmetartun/CSEN268-F24/tree/L15.02) Added Firestore to the functions
 - [Lecture 15 - 03](https://github.com/mehmetartun/CSEN268-F24/tree/L15.03) Deployed functions to the cloud under Blaze plan
+- [Lecture 15 - 04](https://github.com/mehmetartun/CSEN268-F24/tree/L15.04) Creeating namespace for function groups
 
 
 
