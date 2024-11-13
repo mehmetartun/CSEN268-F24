@@ -68,7 +68,19 @@ To upload the image we first need to create a reference in `storage` object we d
 ```
 For added security we inject the timestamp in the image name to avoid overwrites. 
 
-As we implemented different methods for **Web** and **Android/iOS** for saving image to gallery or desktop, we need to do the same here. We already have the `SaveImage` class. We add another static method:
+
+
+As we implemented different methods for **Web** and **Android/iOS** for saving image to gallery or desktop, we need to do the same here. We already have the `SaveImage` class. This was implemented in the following form:
+```zsh
+save_image
+├── save_image.dart         <-- this file to be imported
+├── save_image_io.dart      <-- exported ONLY if dart.io library is loaded
+├── save_image_other.dart   <-- default export
+└── save_image_web.dart     <-- exported ONLY if dart.html library is loaded
+```
+
+
+We add another static method:
 ```dart
   static Future<String?> uploadImageToStorage(
       {required XFile file,
