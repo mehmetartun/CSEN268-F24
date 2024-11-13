@@ -13,13 +13,13 @@ class SaveImage {
   static Future<String?> uploadImageToStorage(
       {required XFile file,
       required Reference storageReference,
-      void Function(double)? updateCallback}) async {
+      void Function(double)? progressCallback}) async {
     await storageReference.putFile(File(file.path));
     UploadTask task = storageReference.putFile(File(file.path));
-    if (updateCallback != null) {
+    if (progressCallback != null) {
       task.snapshotEvents.listen((event) {
         double progress = event.bytesTransferred / event.totalBytes;
-        updateCallback(progress);
+        progressCallback(progress);
       });
     }
 

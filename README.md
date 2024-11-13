@@ -73,7 +73,7 @@ As we implemented different methods for **Web** and **Android/iOS** for saving i
   static Future<String?> uploadImageToStorage(
       {required XFile file,
       required Reference storageReference,
-      void Function(double)? updateCallback}) async {
+      void Function(double)? progressCallback}) async {
         ...
         return downloadUrl;
         ...
@@ -84,7 +84,7 @@ which returns a `downloadUrl`. This function is called as:
     _downloadUrl = await SaveImage.uploadImageToStorage(
     file: _xfile!,
     storageReference: storage.ref(_storagePath),
-    updateCallback: progressCallback,
+    progressCallback: progressCallback,
     );
 ```
 #### The image upload details
@@ -99,7 +99,7 @@ The full image upload method is:
     if (updateCallback != null) {
       task.snapshotEvents.listen((event) {
         double progress = event.bytesTransferred / event.totalBytes;
-        updateCallback(progress);
+        progressCallback(progress);
       });
     }
 
@@ -118,14 +118,14 @@ UploadTask task = storageReference.putFile(File(file.path));
 ```
 Then we create a listenable to be able to process progress:
 ```dart
-if (updateCallback != null) {
+if (progressCallback != null) {
     task.snapshotEvents.listen((event) {
     double progress = event.bytesTransferred / event.totalBytes;
-    updateCallback(progress);
+    progressCallback(progress);
     });
 }
 ```
-Here we compare the amount of bytes transferred to the total in order to get a progress number between 0 and 1. Then we submit this number into the `updateCallback` that has been provided. We'll understand how that works a few sections below.
+Here we compare the amount of bytes transferred to the total in order to get a progress number between 0 and 1. Then we submit this number into the `progressCallback` that has been provided. We'll understand how that works a few sections below.
 
 Then we await for the task to finish and get a snapshot, basically the final status of the upload:
 ```dart
@@ -140,6 +140,51 @@ if (snapshot.state == TaskState.success) {
     return null;
 }
 ```
+#### Displaying the image from the internet
+Once we have the `downloadUrl`, we can use `Image.network` to display the image. This is achieved after calling `setState()` after receiving the `downloadUrl`:
+```dart
+   if (_downloadUrl != null)
+                ConstrainedBox(
+                    constraints: BoxConstraints(maxHeight: 200, maxWidth: 200),
+                    child: Image.network(_downloadUrl!)),
+```
+
+#### Upload progress indicator
+To to this, we create a variable named `progress` in the `State` of our `StatefulWidget`. 
+
+The callback function `progressCallback` is a function that will be called by the upload process of Firebase Storage.
+```dart
+  void progressCallback(double value) {
+    setState(() {
+      _progress = value;
+    });
+  }
+```
+ Each time this function will be passed on the percentage of upload. The function then updates the local variable `progress` and calls `setState()`. This way the `LinearProgressIndicator` repaints itself with the new value of `progress` and we can see an animation of the progress.
+ ```dart
+    Container(
+    padding: EdgeInsets.all(10),
+    margin: EdgeInsets.symmetric(vertical: 10),
+    color: Theme.of(context).colorScheme.primaryContainer,
+    child: LinearProgressIndicator(
+        value: _progress,
+        minHeight: 10,
+    ),
+    ),
+ ```
+
+ #### Updating the `user` object in the database
+With the call to Firestore
+```dart
+    await _docRef
+        ?.collection('images')
+        .add({
+            'imageUrl': _downloadUrl, 
+            'imagePath': _storagePath
+            });
+```
+we add a document to the `images` collection of the `user` where we indicate the public Url as well as the reference in Firebase Storage.
+> Always keep a copy of the actual reference in the storage. Do not rely on the downloadUrl alone
 
 #### Resulting behaviour
 The complete behaviour is seen in this recording:
