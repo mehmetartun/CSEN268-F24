@@ -1,6 +1,7 @@
 import 'package:CSEN268_F24/blocs/notifications/bloc/notifications_bloc.dart';
 import 'package:CSEN268_F24/firebase_options.dart';
 import 'package:CSEN268_F24/pages/functions_demo.dart';
+import 'package:CSEN268_F24/pages/image_upload_page.dart';
 import 'package:CSEN268_F24/repositories/authentication/authentication_repository.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_app_installations/firebase_app_installations.dart';
@@ -105,7 +106,7 @@ class MyApp extends StatelessWidget {
               child: _child,
             );
           },
-          home: FunctionsDemoPage(),
+          home: ImageUploadPage(),
         ),
       ),
     );
