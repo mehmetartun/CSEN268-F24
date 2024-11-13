@@ -34,6 +34,12 @@
 	<string>Access to the location is needed for the app when open.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Access to the location is needed when in the background.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Access to the photo libray is needed.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Access to the camera is needed.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Access to the microphone is needed.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
