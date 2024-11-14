@@ -1,7 +1,10 @@
+import 'package:CSEN268_F24/navigation/router.dart';
 import 'package:CSEN268_F24/pages/sign_in/cubit/sign_in_cubit.dart';
 import 'package:CSEN268_F24/pages/sign_in/views/sign_in_view.dart';
+import 'package:CSEN268_F24/pages/sign_in/views/sign_up_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
@@ -12,12 +15,25 @@ class SignInPage extends StatelessWidget {
 
     return BlocProvider(
       create: (context) => cubit,
-      child: BlocBuilder<SignInCubit, SignInState>(
+      child: BlocConsumer<SignInCubit, SignInState>(
+        listener: (context, state) {
+          if (state is SignInSuccess) {
+            GoRouter.of(context).goNamed(MyRoutes.home.name);
+          }
+        },
         builder: (context, state) {
           switch (state) {
+            case SignUpState _:
+              return SignUpView(
+                emailSignUpCallback: cubit.emailSignUp,
+                signInRequestCallback: cubit.signInRequest,
+              );
             case SignInInitial _:
             default:
-              return SignInView(emailSignInCallback: cubit.emailSignIn);
+              return SignInView(
+                emailSignInCallback: cubit.emailSignIn,
+                signUpRequestCallback: cubit.signUpRequest,
+              );
           }
         },
       ),

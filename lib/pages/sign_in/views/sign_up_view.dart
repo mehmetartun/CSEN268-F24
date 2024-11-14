@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class SignInView extends StatefulWidget {
-  const SignInView(
+class SignUpView extends StatefulWidget {
+  const SignUpView(
       {super.key,
-      required this.emailSignInCallback,
-      required this.signUpRequestCallback});
+      required this.emailSignUpCallback,
+      required this.signInRequestCallback});
   final Future<String?> Function(
-      {required String email, required String password}) emailSignInCallback;
-  final void Function() signUpRequestCallback;
+      {required String email, required String password}) emailSignUpCallback;
+  final void Function() signInRequestCallback;
 
   @override
-  State<SignInView> createState() => _SignInViewState();
+  State<SignUpView> createState() => _SignUpViewState();
 }
 
-class _SignInViewState extends State<SignInView> {
+class _SignUpViewState extends State<SignUpView> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -34,7 +34,7 @@ class _SignInViewState extends State<SignInView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sign In"),
+        title: Text("Sign Up"),
       ),
       body: Form(
         key: _formKey,
@@ -75,12 +75,12 @@ class _SignInViewState extends State<SignInView> {
                 ),
                 Container(
                   width: double.maxFinite,
-                  padding: EdgeInsets.only(top: 10, bottom: 10),
+                  padding: EdgeInsets.only(top: 10),
                   child: FilledButton(
                       onPressed: () async {
                         if (_formKey.currentState?.validate() ?? false) {
                           _formKey.currentState?.save();
-                          errorMessage = await widget.emailSignInCallback(
+                          errorMessage = await widget.emailSignUpCallback(
                               email: email!, password: password!);
                           if (errorMessage != null) {
                             setState(() {
@@ -91,14 +91,14 @@ class _SignInViewState extends State<SignInView> {
                           }
                         }
                       },
-                      child: Text("Sign In")),
+                      child: Text("Sign Up")),
                 ),
                 Row(
                   children: [
-                    Text("Don't have an account?"),
+                    Text("Already have an account?"),
                     TextButton(
-                      child: Text("Sign Up"),
-                      onPressed: widget.signUpRequestCallback,
+                      child: Text("Sign In"),
+                      onPressed: widget.signInRequestCallback,
                     )
                   ],
                 )

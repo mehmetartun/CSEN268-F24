@@ -1,5 +1,6 @@
 import 'package:CSEN268_F24/firebase_options.dart';
 import 'package:CSEN268_F24/navigation/router.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  // FirebaseAuth.instance.signOut();
   // FirebaseFunctions.instance.useFunctionsEmulator("localhost", 5001);
   runApp(MyApp());
 }
