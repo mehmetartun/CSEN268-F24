@@ -1,3 +1,4 @@
+import 'package:CSEN268_F24/pages/sign_in/sign_in_page.dart';
 import 'package:CSEN268_F24/utilities/stream_to_listenable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
@@ -36,7 +37,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: MyRoutes.signIn.path,
       name: MyRoutes.signIn.name,
-      builder: (context, state) => GenericPage(title: "Sign In"),
+      builder: (context, state) => SignInPage(),
     ),
   ],
 );
