@@ -23,7 +23,7 @@ Here the `Form` takes an email and password and passes it to the `emailSignInCal
 
 With this, our screen becomes:
 
-<img src="/assets/images/AuthStep2_Screen.png" alt="Alt Text" width="300">
+<img src="/assets/images/AuthStep2_Screen.png" alt="Step 2" width="300">
 <!-- ![SignIn Screen](/assets/images/AuthStep2_Screen.png) -->
 
 
