@@ -3,8 +3,9 @@
 [Table of Contents](/toc.md)
 
 
-## Lecture 16 - Firebase Authentication - Google SignIn and Email SignIn
-We implement raw Firebase Authentication with Google SignIn and Email SignIn. We remove all dependencies from the project:
+## Lecture 16 - Firebase Authentication - Apple SignIn, Google SignIn and Email SignIn
+We implement raw Firebase Authentication with Apple SignIn, Google SignIn and Email SignIn.
+We remove all dependencies from the project:
 - Firebase Storage
 - Firebase Messaging
 - Google Maps

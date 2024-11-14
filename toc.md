@@ -42,7 +42,7 @@ The content in this repo follows the CSEN268 Fall24 Lecture at Santa Clara Unive
 - [Lecture 15 - 04](https://github.com/mehmetartun/CSEN268-F24/tree/L15.04) Creeating namespace for function groups
 - [Lecture 15 - 05](https://github.com/mehmetartun/CSEN268-F24/tree/L15.05) Firestore triggers
 - [Lecture 15 - 06](https://github.com/mehmetartun/CSEN268-F24/tree/L15.06) Firebase storage demo
-- [Lecture 16 - 00](https://github.com/mehmetartun/CSEN268-F24/tree/L16.00) Clean Up the App to Implement Firebase Ui Auth from scratch
+- [Lecture 16 - 00](https://github.com/mehmetartun/CSEN268-F24/tree/L16.00) Clean Up the App to Implement Firebase Auth from scratch
 
 
 
