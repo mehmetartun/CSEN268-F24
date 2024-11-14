@@ -1,5 +1,6 @@
 import 'package:CSEN268_F24/navigation/router.dart';
 import 'package:CSEN268_F24/pages/sign_in/cubit/sign_in_cubit.dart';
+import 'package:CSEN268_F24/pages/sign_in/views/forgot_pasword_view.dart';
 import 'package:CSEN268_F24/pages/sign_in/views/sign_in_view.dart';
 import 'package:CSEN268_F24/pages/sign_in/views/sign_up_view.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,11 @@ class SignInPage extends StatelessWidget {
         },
         builder: (context, state) {
           switch (state) {
+            case PasswordReset _:
+              return ForgotPasswordView(
+                emailForgotPasswordCallback: cubit.forgotPassword,
+                cancelRequestCallback: cubit.signInRequest,
+              );
             case SignUpState _:
               return SignUpView(
                 emailSignUpCallback: cubit.emailSignUp,
@@ -33,6 +39,7 @@ class SignInPage extends StatelessWidget {
               return SignInView(
                 emailSignInCallback: cubit.emailSignIn,
                 signUpRequestCallback: cubit.signUpRequest,
+                resetPasswordRequestCallback: cubit.resetPasswordRequest,
               );
           }
         },

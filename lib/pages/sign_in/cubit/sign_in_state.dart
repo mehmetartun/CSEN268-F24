@@ -8,3 +8,5 @@ final class SignInInitial extends SignInState {}
 final class SignUpState extends SignInState {}
 
 final class SignInSuccess extends SignInState {}
+
+final class PasswordReset extends SignInState {}

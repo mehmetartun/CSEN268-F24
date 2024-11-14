@@ -1,34 +1,29 @@
 import 'package:flutter/material.dart';
 
-class SignInView extends StatefulWidget {
-  const SignInView(
+class ForgotPasswordView extends StatefulWidget {
+  const ForgotPasswordView(
       {super.key,
-      required this.emailSignInCallback,
-      required this.signUpRequestCallback,
-      required this.resetPasswordRequestCallback});
-  final Future<String?> Function(
-      {required String email, required String password}) emailSignInCallback;
-  final void Function() signUpRequestCallback;
-  final void Function() resetPasswordRequestCallback;
+      required this.emailForgotPasswordCallback,
+      required this.cancelRequestCallback});
+  final Future<String?> Function({required String email})
+      emailForgotPasswordCallback;
+  final void Function() cancelRequestCallback;
 
   @override
-  State<SignInView> createState() => _SignInViewState();
+  State<ForgotPasswordView> createState() => _ForgotPasswordViewState();
 }
 
-class _SignInViewState extends State<SignInView> {
+class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
 
   String? email;
-  String? password;
   String? errorMessage;
   CrossFadeState crossFadeState = CrossFadeState.showFirst;
 
   @override
   void initState() {
     emailController.text = "";
-    passwordController.text = "";
     super.initState();
   }
 
@@ -66,53 +61,45 @@ class _SignInViewState extends State<SignInView> {
                   },
                   validator: (value) => null,
                 ),
-                TextFormField(
-                  controller: passwordController,
-                  decoration: InputDecoration(labelText: "Password"),
-                  obscureText: true,
-                  onSaved: (newValue) {
-                    password = passwordController.text;
-                  },
-                  validator: (value) => null,
-                ),
-                Row(
-                  children: [
-                    Text("Forgot password?"),
-                    TextButton(
-                      child: Text("Reset Password"),
-                      onPressed: widget.resetPasswordRequestCallback,
-                    )
-                  ],
-                ),
                 Container(
                   width: double.maxFinite,
-                  padding: EdgeInsets.only(top: 20, bottom: 0),
+                  padding: EdgeInsets.only(top: 10, bottom: 10),
                   child: FilledButton(
                       onPressed: () async {
                         if (_formKey.currentState?.validate() ?? false) {
                           _formKey.currentState?.save();
-                          errorMessage = await widget.emailSignInCallback(
-                              email: email!, password: password!);
+                          errorMessage = await widget
+                              .emailForgotPasswordCallback(email: email!);
                           if (errorMessage != null) {
                             setState(() {
                               emailController.clear();
-                              passwordController.clear();
                               crossFadeState = CrossFadeState.showSecond;
                             });
+                          } else {
+                            await showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("Password Reset"),
+                                    content: Text(
+                                        "Please check your email for a password reseet link."
+                                        " Once you set a new password, you can login in the Sign In screen."),
+                                  );
+                                });
                           }
                         }
                       },
-                      child: Text("Sign In")),
+                      child: Text("Password Reset")),
                 ),
                 Row(
                   children: [
-                    Text("Don't have an account?"),
+                    Text("Changed your mind?"),
                     TextButton(
-                      child: Text("Sign Up"),
-                      onPressed: widget.signUpRequestCallback,
+                      child: Text("Cancel"),
+                      onPressed: widget.cancelRequestCallback,
                     )
                   ],
-                ),
+                )
               ],
             ),
           ),
@@ -124,7 +111,6 @@ class _SignInViewState extends State<SignInView> {
   @override
   void dispose() {
     emailController.dispose();
-    passwordController.dispose();
     super.dispose();
   }
 }
