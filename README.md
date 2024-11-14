@@ -3,24 +3,58 @@
 [Table of Contents](/toc.md)
 
 
-## Lecture 16 - Firebase Authentication - Apple SignIn, Google SignIn and Email SignIn
-We implement raw Firebase Authentication with Apple SignIn, Google SignIn and Email SignIn.
-We remove all dependencies from the project:
-- Firebase Storage
-- Firebase Messaging
-- Google Maps
-- Shimmer
-- Google Analytics
-- Geolocator
-- Contacts
-- Image Picker
-and we also remove
-- AuthenticationRepository
-- Notifications Bloc
-- Save Image Service
-and turn it into a lightweight project where we will implement Firebase Ui Auth from scratch.
+## Lecture 16 - Step 1 - Add Firebase Auth and listen to Auth 
+We add Firebase Auth to our project by:
+```zsh
+flutter pub add firebase_auth
+```
+To run, you will be required to change the `minSdk` to `23` in [build.gradle](/android/app/build.gradle).
 
-The `router` is pointing to `/` and that's the only Route that exists in the app.
+### Configuring the Router
+In our [router.dart](/lib/navigation/router.dart) we make our initial configuration as follows:
+```dart
+final GoRouter router = GoRouter(
+  refreshListenable:
+      StreamToListenable([FirebaseAuth.instance.authStateChanges()]),
+  redirect: (context, state) {
+    if (FirebaseAuth.instance.currentUser == null &&
+        !(state.fullPath?.startsWith("/sign_in") ?? false)) {
+      return "/sign_in";
+    }
+    return null;
+  },
+  initialLocation: "/",
+  routes: [
+    GoRoute(
+      path: MyRoutes.home.path,
+      name: MyRoutes.home.name,
+      builder: (context, state) => GenericPage(title: "Home"),
+    ),
+    GoRoute(
+      path: MyRoutes.signIn.path,
+      name: MyRoutes.signIn.name,
+      builder: (context, state) => GenericPage(title: "Sign In"),
+    ),
+  ],
+);
+```
+Here the `redirect` is triggered every time a new route is requested **or** the `refreshListenable` gets triggered by the stream `authStateChanges()`. If the path is not pointed to `/sign_in`, then it will be directed there in case the `currentUser` is null.
+> Note that the `refreshListenable` doesn't do anything with the values in the stream, it only gets triggered.
+
+To avoid using Strings withing the code, we create `MyRoute` and `MyRoutes` to refer to paths and route names through these classes.
+```dart
+class MyRoutes {
+  static final signIn = MyRoute(name: "signIn", path: "/sign_in");
+  static final home = MyRoute(name: "home", path: "/");
+}
+
+class MyRoute {
+  final String name;
+  final String path;
+
+  MyRoute({required this.name, required this.path});
+}
+```
 
 ### Setting up your environment before the lecture
 
