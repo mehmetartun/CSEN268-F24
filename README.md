@@ -22,7 +22,7 @@ The cubit has an unimplemented function `emailSignIn` that is passed on to the `
 Here the `Form` takes an email and password and passes it to the `emailSignInCallback` which is the `emailSignIn` method in the `SignInCubit`.
 
 With this, our screen becomes:
-[SignIn Screen](/assets/images/AuthStep2_Screen.png)
+![SignIn Screen](/assets/images/AuthStep2_Screen.png)
 
 
 
