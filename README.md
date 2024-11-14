@@ -11,6 +11,9 @@ flutter pub add firebase_auth
 To run, you will be required to change the `minSdk` to `23` in [build.gradle](/android/app/build.gradle).
 
 ### Configuring the Router
+
+![Step 1](/assets/images/Auth_Step1.png)
+
 In our [router.dart](/lib/navigation/router.dart) we make our initial configuration as follows:
 ```dart
 final GoRouter router = GoRouter(
