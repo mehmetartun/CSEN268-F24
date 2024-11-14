@@ -40,6 +40,7 @@ class SignInPage extends StatelessWidget {
                 emailSignInCallback: cubit.emailSignIn,
                 signUpRequestCallback: cubit.signUpRequest,
                 resetPasswordRequestCallback: cubit.resetPasswordRequest,
+                googleSignInCallback: cubit.googleSignIn,
               );
           }
         },

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 part 'sign_in_state.dart';
 
@@ -38,6 +39,26 @@ class SignInCubit extends Cubit<SignInState> {
 
   void resetPasswordRequest() {
     emit(PasswordReset());
+  }
+
+  Future<String?> googleSignIn() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    if (googleUser != null) {
+      try {
+        final GoogleSignInAuthentication? googleAuth =
+            await googleUser?.authentication;
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth?.accessToken,
+          idToken: googleAuth?.idToken,
+        );
+        UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithCredential(credential);
+        emit(SignInSuccess());
+        return null;
+      } catch (e) {
+        return e.toString();
+      }
+    }
   }
 
   Future<String?> forgotPassword({required String email}) async {
