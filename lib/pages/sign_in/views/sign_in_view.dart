@@ -6,6 +6,7 @@ class SignInView extends StatefulWidget {
       required this.emailSignInCallback,
       required this.signUpRequestCallback,
       required this.resetPasswordRequestCallback});
+
   final Future<String?> Function(
       {required String email, required String password}) emailSignInCallback;
   final void Function() signUpRequestCallback;
