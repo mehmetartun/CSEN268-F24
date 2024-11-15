@@ -8,10 +8,12 @@ class SignInView extends StatefulWidget {
     required this.signUpRequestCallback,
     required this.resetPasswordRequestCallback,
     required this.googleSignInCallback,
+    required this.appleSignInCallback,
   });
   final Future<String?> Function(
       {required String email, required String password}) emailSignInCallback;
   final Future<String?> Function() googleSignInCallback;
+  final Future<String?> Function() appleSignInCallback;
   final void Function() signUpRequestCallback;
   final void Function() resetPasswordRequestCallback;
 
@@ -92,7 +94,12 @@ class _SignInViewState extends State<SignInView> {
                         width: double.maxFinite,
                         child: SignInButton(
                           Buttons.apple,
-                          onPressed: widget.googleSignInCallback,
+                          onPressed: () async {
+                            errorMessage = await widget.appleSignInCallback();
+                            if (errorMessage != null) {
+                              setState(() {});
+                            }
+                          },
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(100)),
                         )),

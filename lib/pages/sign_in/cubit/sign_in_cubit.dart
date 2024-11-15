@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -58,6 +59,20 @@ class SignInCubit extends Cubit<SignInState> {
       } catch (e) {
         return e.toString();
       }
+    }
+  }
+
+  Future<String?> appleSignIn() async {
+    final appleProvider = AppleAuthProvider();
+    if (kIsWeb) {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithPopup(appleProvider);
+    } else {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithProvider(appleProvider);
+    }
+    if (UserCredential != null) {
+      emit(SignInSuccess());
     }
   }
 

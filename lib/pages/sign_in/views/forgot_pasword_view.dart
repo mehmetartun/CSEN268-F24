@@ -82,8 +82,17 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                                   return AlertDialog(
                                     title: Text("Password Reset"),
                                     content: Text(
-                                        "Please check your email for a password reseet link."
-                                        " Once you set a new password, you can login in the Sign In screen."),
+                                      "Please check your email for a password reseet link."
+                                      " Once you set a new password, you can login in the Sign In screen.",
+                                    ),
+                                    actions: [
+                                      FilledButton(
+                                        child: Text("OK"),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      )
+                                    ],
                                   );
                                 });
                           }
