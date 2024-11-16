@@ -23,7 +23,10 @@ This has only one textfield, `email` which will be used to send a reset link ema
     }
   }
 ```
+### Flowchart
+Desired flow of the email authentication is:
 
+![Flowchart](/assets/images/LoginFlowChart.png)
 
 
 ### Setting up your environment before the lecture
