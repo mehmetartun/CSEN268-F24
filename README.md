@@ -3,14 +3,7 @@
 [Table of Contents](/toc.md)
 
 
-## Lecture 16 - Step 1 - Add Firebase Auth and listen to Auth 
-We add Firebase Auth to our project by:
-```zsh
-flutter pub add firebase_auth
-```
-To run, you will be required to change the `minSdk` to `23` in [build.gradle](/android/app/build.gradle).
-
-### Configuring the Router
+## Lecture 16 - Step 1 - Configuring the Router
 
 ![Step 1](/assets/images/Auth_Step1.png)
 
