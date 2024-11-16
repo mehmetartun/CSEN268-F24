@@ -4,18 +4,13 @@
 
 
 ## Lecture 16 - Step Implement Google Sign In
-We start by adding `google_sign_in`:
+To implement Google Sign-In we need to get our debug key in the following fashion by issuing;
 ```zsh
-flutter pub add google_sign_in
+keytool -list -v \
+    -alias androiddebugkey -keystore ~/.android/debug.keystore
 ```
-And for the appropriate button we import the package `sign_in_button`:
+which asks for the keystore password which is **android**:
 ```zsh
-flutter pub add sign_in_button
-```
-
-```zsh
-MA@MBP:~> keytool -list -v \
--alias androiddebugkey -keystore ~/.android/debug.keystore
 Enter keystore password:  android
 Alias name: androiddebugkey
 Creation date: 2 Oct 2022
@@ -36,6 +31,8 @@ Version: 1
 Warning:
 The certificate uses the SHA1withRSA signature algorithm which is considered a security risk. This algorithm will be disabled in a future update.
 ```
+This SHA-1 is entered into the Android App in Firebase Console.
+
 ### Implementing the Google SignIn in the Cubit
 In our cubit, we create a function for Google Sign In that gets us the user credentials at Google and using this we can then invoke the `signInWithCredential` method of Firebase Auth to sign the Google User in.
 ```dart
@@ -59,7 +56,7 @@ In our cubit, we create a function for Google Sign In that gets us the user cred
     }
   }
 ```
-In sign-out, we must sign out **both** from Firebase **and** Google:
+In sign-out, we must sign out **both** from Firebase **and** Google. This logout button is currently on the **Home** page:
 ```dart
     child: FilledButton(
         onPressed: () async {
