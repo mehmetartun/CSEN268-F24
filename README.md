@@ -20,6 +20,12 @@ and we also remove
 - Save Image Service
 and turn it into a lightweight project where we will implement Firebase Ui Auth from scratch.
 
+In order to prevent pod installation in future steps, we import 3 dependencies at this step:
+```zsh
+flutter pub add google_sign_in sign_in_button firebase_auth
+```
+### Go Router
+
 The `router` is pointing to `/` and that's the only Route that exists in the app.
 
 ### Setting up your environment before the lecture
