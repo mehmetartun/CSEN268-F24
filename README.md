@@ -70,6 +70,9 @@ On the other hand if there is an error it gets return to the Sign Up or Sign In 
       child: Text("Sign In")),
 ```
 
+### Our desired setup is the setup depicted in the following flowchart
+
+![Login Flow](/assets/images/LoginFlowChart.png)
 
 ### Setting up your environment before the lecture
 
