@@ -3,7 +3,14 @@
 [Table of Contents](/toc.md)
 
 
-## Lecture 16 - Step 1 - Configuring the Router
+## Lecture 16 - Step 1 - Email Sign In 
+
+The goal of the Email Sign In is to implement this logic in the code:
+
+![Email Login Flow](/assets/images/LoginFlowChart.png)
+
+
+### Configuring the Router
 
 ![Step 1](/assets/images/Auth_Step1.png)
 
