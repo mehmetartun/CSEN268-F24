@@ -27,6 +27,12 @@ With this, our screen becomes:
 <!-- ![SignIn Screen](/assets/images/AuthStep2_Screen.png) -->
 
 
+### Desired Email Flowchart
+
+We aim to implment the following logic for the flow on the Email authentication part.
+
+![Login Flowchart](/assets/images/LoginFlowChart.png)
+
 
 ### Setting up your environment before the lecture
 
