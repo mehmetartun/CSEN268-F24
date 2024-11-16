@@ -47,13 +47,7 @@ class SignInCubit extends Cubit<SignInState> {
       emit(SignInInitial());
       return null;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        return 'The password provided is too weak.';
-      } else if (e.code == 'email-already-in-use') {
-        return 'The account already exists for that email.';
-      } else {
-        return e.code;
-      }
+      return e.code;
     } catch (e) {
       return e.toString();
     }

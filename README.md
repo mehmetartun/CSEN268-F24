@@ -6,7 +6,23 @@
 ## Lecture 16 - Step 4 - Implement Forgot Password
 We add `ForgotState` and also implement a `ForgotPasswordView`.
 
+### ForgotPasswordView
 
+This has only one textfield, `email` which will be used to send a reset link email.  On this view the user can change their mind and switch back to `SignInView`. In the `cubit` the call that handles the password reset is:
+```dart
+  Future<String?> forgotPassword({required String email}) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+
+      emit(SignInInitial());
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return e.code;
+    } catch (e) {
+      return e.toString();
+    }
+  }
+```
 
 
 
