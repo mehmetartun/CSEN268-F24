@@ -30,6 +30,11 @@ To run, you will be required to change the `minSdk` to `23` in [build.gradle](/a
 
 The `router` is pointing to `/` and that's the only Route that exists in the app.
 
+### Email Authentication Flow 
+We will aim to build an authentication flow with this logic:
+
+![FlowChart Login](/assets/images/LoginFlowChart.png)
+
 ### Setting up your environment before the lecture
 
 Each lecture is stored under a separate tag. On your computer do the following
