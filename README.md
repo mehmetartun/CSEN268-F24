@@ -24,6 +24,8 @@ In order to prevent pod installation in future steps, we import 3 dependencies a
 ```zsh
 flutter pub add google_sign_in sign_in_button firebase_auth
 ```
+To run, you will be required to change the `minSdk` to `23` in [build.gradle](/android/app/build.gradle).
+
 ### Go Router
 
 The `router` is pointing to `/` and that's the only Route that exists in the app.
