@@ -4,7 +4,9 @@
 
 
 ## Lecture 16 - Step Implement Apple Sign In
-We can start by adding `apple sign in`.
+The steps to implement are explained in the lecture notes that can be found here:
+
+[Apple Authentication](https://docs.google.com/presentation/d/1u0sv3tB5BHsVdFCI4gmVp_0eLWKwY7QU5_Rfms5qxak/edit?usp=sharing)
 
 ### Setting up your environment before the lecture
 
