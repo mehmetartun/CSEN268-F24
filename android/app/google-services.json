@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "940129645525",
     "project_id": "fir-messaging-8b691",
-    "storage_bucket": "fir-messaging-8b691.firebasestorage.app"
+    "storage_bucket": "fir-messaging-8b691.appspot.com"
   },
   "client": [
     {
@@ -12,20 +12,7 @@
           "package_name": "com.artun.fmdemo"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "940129645525-edi0n096njdlo515camt20n2jcdkurru.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.artun.fmdemo",
-            "certificate_hash": "50537036a64a27f1cf73fcaf0eeebb08a8e7efb0"
-          }
-        },
-        {
-          "client_id": "940129645525-oo43e4f2csbgih2irjro7e3ab2hqm3hu.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyCy9AQ88EwCvGuLw3wAg77fz0wwecS6-yk"
@@ -33,19 +20,7 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "940129645525-oo43e4f2csbgih2irjro7e3ab2hqm3hu.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "940129645525-gfcgqj6bcatb74el8odas789q0jq9t52.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.artun.fmdemo"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
