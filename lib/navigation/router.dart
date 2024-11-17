@@ -7,6 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../pages/generic_page.dart';
 
+
 class MyRoutes {
   static final signIn = MyRoute(name: "signIn", path: "/sign_in");
   static final home = MyRoute(name: "home", path: "/");
@@ -51,3 +52,4 @@ final GoRouter router = GoRouter(
     ),
   ],
 );
+
