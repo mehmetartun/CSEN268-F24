@@ -6,7 +6,7 @@
 ## Lecture 17 - Testing
 In this lecture we will explore testing of widgets and the app in general
 
-### Testing a Cubit
+### Step 01 - Testing a Cubit
 Now we will create a cubit and test the cubit.
 ```dart
 class CounterCubit extends Cubit<CounterState> {
