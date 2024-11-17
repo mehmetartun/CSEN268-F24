@@ -6,72 +6,86 @@
 ## Lecture 17 - Testing
 In this lecture we will explore testing of widgets and the app in general
 
-### Step 01 - Testing a Cubit
-Now we will create a cubit and test the cubit.
-```dart
-class CounterCubit extends Cubit<CounterState> {
-  CounterCubit() : super(CounterInitial());
-  int counter = 0;
+### Step 02 - Testing a Complex Widget
+In this case let's create a complex widget and test it's behavior.
 
-  void add() {
-    counter += 1;
+Widgets that we create standalone need a `MaterialApp` to create the widget tree:
+```dart
+  Widget createWidget(Widget child) {
+    return MaterialApp(home: Scaffold(body: child));
   }
-
-  void subtract() {
-    counter -= 1;
-  }
-}
 ```
-We will test whether the `add()` and `subtract()` methods of the counter are working.
+is a simple wrapper for the individual widget that we are testing.
 
-### Writing the test
-We can create a separate file `test.dart` where we test objects.
+Let's look at `UserListTile` which displays the user's display name (first name and last name combined) as well as their email and initials in the avatar.
+Our test is then defined as:
 ```dart
-void main() {
-  CounterCubit cubit = CounterCubit();
-  test("Counter Cubit Test", () {
-    cubit.add();
-    expect(cubit.counter, 1);
-    cubit.subtract();
-    expect(cubit.counter, 0);
+  testWidgets('UserListTile Widget Test', (WidgetTester tester) async {
+    await tester.pumpWidget(createWidget(
+      UserListTile(
+          user: User(
+        firstName: "John",
+        lastName: "Doe",
+        email: "john@doe.com",
+        imageUrl: "https://placehold.co/500x500",
+        uid: "1234567890",
+      )),
+    ));
+    expect(find.text('John Doe'), findsOneWidget);
+    expect(find.text('JD'), findsOneWidget);
+    expect(find.text('john@doe.com'), findsOneWidget);
   });
-}
 ```
-we can run the test and receive the following result:
+and running the test we see that:
 ```zsh
-flutter test test/test.dart
-00:01 +1: All tests passed!     
+flutter test test/widget_test.dart
+00:01 +1: All tests passed!             
 ```
 
-### Simulate fail
-If we change our test to:
+### Adding cases to your test suite
+Let's add a few test cases to ensure that the widget can handle it. For that, let's pass a last name that's empty:
 ```dart
-void main() {
-  CounterCubit cubit = CounterCubit();
-  test("Counter Cubit Test", () {
-    cubit.add();
-    expect(cubit.counter, 1);
-    cubit.subtract();
-    expect(cubit.counter, 1);
-  });
-}
+    await tester.pumpWidget(createWidget(
+      UserListTile(
+          user: User(
+        firstName: "John",
+        lastName: "",
+        email: "john@doe.com",
+        imageUrl: "https://placehold.co/500x500",
+        uid: "1234567890",
+      )),
+    ));
+    expect(find.text('John'), findsOneWidget);
+    expect(find.text('J'), findsOneWidget);
+    expect(find.text('john@doe.com'), findsOneWidget);
 ```
-There the **second** expect would result in error, we get the following result:
+In this case we would expect the display name to be **John** and the initials to just show **J**. Let's run this and see what we get:
 ```zsh
-00:01 +0 -1: Counter Cubit Test [E]                                                                                               
-  Expected: <1>
-    Actual: <0>
-  
-  package:matcher                                     expect
-  package:flutter_test/src/widget_tester.dart 480:18  expect
-  test/test.dart 10:5                                 main.<fn>
-  
-
-To run this test again: /Users/mehmetartun/Utilities/flutter/bin/cache/dart-sdk/bin/dart test /Users/mehmetartun/Development/csen268/CSEN268-F24/test/test.dart -p vm --plain-name 'Counter Cubit Test'
-00:01 +0 -1: Some tests failed. 
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following message was thrown:
+Multiple exceptions (4) were detected during the running of the current test, and at least one was
+unexpected.
+════════════════════════════════════════════════════════════════════════════════════════════════════
 ```
-which shows that the test failed and we can find where it failed in the specific point in the file `test/test.dart 10:5`.
+We get a few errors. When investigating the output above we note that:
+```zsh
+══╡ EXCEPTION CAUGHT BY WIDGETS LIBRARY ╞═══════════════════════════════════════════════════════════
+The following RangeError was thrown building UserAvatar:
+RangeError (index): Invalid value: Valid value range is empty: 0
 
+The relevant error-causing widget was:
+  UserAvatar
+  UserAvatar:file:///Users/mehmetartun/Development/csen268/CSEN268-F24/lib/widgets/user_list_tile.dart:13:16
+```
+This is because our `UserAvatar` doesn't expect strings shorter than 1 for the first name and last name. From [user_avatar.dart](/lib/widgets/user_avatar.dart) we see that it references the first character:
+```dart
+    return CircleAvatar(
+      child: Text(
+        '${user.firstName[0].toUpperCase()}${user.lastName[0].toUpperCase()}',
+      ),
+    );
+```
+Now with the help of the test result we can rectify this in the next step.
 
 ### Setting up your environment before the lecture
 
