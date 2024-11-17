@@ -23,6 +23,16 @@ flutter pub add dev:test 'dev:flutter_driver:{"sdk":"flutter"}' 'dev:integration
 ```
 with `dev_dependency` meaning it's a development dependency included in **devopment** mode. They are not included in the **release** mode,.
 
+### Basic Test of the App
+A basic test is shown in the [widget_test.dart](/test/widget_test.dart). To run this test we can either:
+```zsh
+flutter test test/widget_test.dart
+```
+or
+```zsh
+flutter run test/widget_test.dart
+```
+
 
 ### Setting up your environment before the lecture
 
