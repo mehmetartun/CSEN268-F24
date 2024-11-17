@@ -45,6 +45,10 @@ The content in this repo follows the CSEN268 Fall24 Lecture at Santa Clara Unive
 - [Lecture 16 - 00](https://github.com/mehmetartun/CSEN268-F24/tree/L16.00) Clean Up the App to Implement Firebase Auth from scratch
 - [Lecture 16 - 01](https://github.com/mehmetartun/CSEN268-F24/tree/L16.01) Setup the router and add listener to Firebase Auth
 - [Lecture 16 - 02](https://github.com/mehmetartun/CSEN268-F24/tree/L16.02) Build the Sign In Page with its Cubit
+- [Lecture 16 - 03](https://github.com/mehmetartun/CSEN268-F24/tree/L16.03) Build the Sign Up Page and connect to Firebase 
+- [Lecture 16 - 04](https://github.com/mehmetartun/CSEN268-F24/tree/L16.04) Implement Forgot Password View
+- [Lecture 16 - 05](https://github.com/mehmetartun/CSEN268-F24/tree/L16.05) Implement Google Sign In
+
 
 
 
