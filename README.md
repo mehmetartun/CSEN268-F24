@@ -56,7 +56,7 @@ void main() {
   });
 }
 ```
-There the second expect would result in error, we get the following result:
+There the **second** expect would result in error, we get the following result:
 ```zsh
 00:01 +0 -1: Counter Cubit Test [E]                                                                                               
   Expected: <1>
