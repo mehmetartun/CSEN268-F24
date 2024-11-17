@@ -57,8 +57,20 @@ void main() {
 }
 ```
 There the second expect would result in error, we get the following result:
+```zsh
+00:01 +0 -1: Counter Cubit Test [E]                                                                                               
+  Expected: <1>
+    Actual: <0>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 480:18  expect
+  test/test.dart 10:5                                 main.<fn>
+  
 
-
+To run this test again: /Users/mehmetartun/Utilities/flutter/bin/cache/dart-sdk/bin/dart test /Users/mehmetartun/Development/csen268/CSEN268-F24/test/test.dart -p vm --plain-name 'Counter Cubit Test'
+00:01 +0 -1: Some tests failed. 
+```
+which shows that the test failed and we can find where it failed in the specific point in the file `test/test.dart 10:5`.
 
 
 ### Setting up your environment before the lecture
