@@ -1,1 +1,44 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"fir-messaging-8b691","appId":"1:940129645525:android:5114240a14dd8daec6035c","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"fir-messaging-8b691","appId":"1:940129645525:ios:f881e9dd13e1c59ec6035c","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"fir-messaging-8b691","configurations":{"android":"1:940129645525:android:5114240a14dd8daec6035c","ios":"1:940129645525:ios:f881e9dd13e1c59ec6035c","web":"1:940129645525:web:3b27158c79d8b14bc6035c"}}}}},"functions":[{"source":"functions","codebase":"default","ignore":["node_modules",".git","firebase-debug.log","firebase-debug.*.log","*.local"]}]}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "fir-messaging-8b691",
+          "appId": "1:940129645525:android:5114240a14dd8daec6035c",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "fir-messaging-8b691",
+          "appId": "1:940129645525:ios:f881e9dd13e1c59ec6035c",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "fir-messaging-8b691",
+          "configurations": {
+            "android": "1:940129645525:android:5114240a14dd8daec6035c",
+            "ios": "1:940129645525:ios:f881e9dd13e1c59ec6035c",
+            "web": "1:940129645525:web:3b27158c79d8b14bc6035c"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ]
+}
