@@ -6,32 +6,59 @@
 ## Lecture 17 - Testing
 In this lecture we will explore testing of widgets and the app in general
 
-### Packages
-We remove all the packages from the previous lecture and leave only:
-```yaml
-  flutter_lorem: ^2.0.0
-  uuid: ^4.5.1
-  flutter_bloc: ^8.1.6
-  go_router: ^14.3.0
-  firebase_core: ^3.6.0
-  intl: ^0.19.0
-  cloud_firestore: ^5.4.4
-```
-and add the following:
-```zsh
-flutter pub add dev:test 'dev:flutter_driver:{"sdk":"flutter"}' 'dev:integration_test:{"sdk":"flutter"}'
-```
-with `dev_dependency` meaning it's a development dependency included in **devopment** mode. They are not included in the **release** mode,.
+### Testing a Cubit
+Now we will create a cubit and test the cubit.
+```dart
+class CounterCubit extends Cubit<CounterState> {
+  CounterCubit() : super(CounterInitial());
+  int counter = 0;
 
-### Basic Test of the App
-A basic test is shown in the [widget_test.dart](/test/widget_test.dart). To run this test we can either:
-```zsh
-flutter test test/widget_test.dart
+  void add() {
+    counter += 1;
+  }
+
+  void subtract() {
+    counter -= 1;
+  }
+}
 ```
-or
-```zsh
-flutter run test/widget_test.dart
+We will test whether the `add()` and `subtract()` methods of the counter are working.
+
+### Writing the test
+We can create a separate file `test.dart` where we test objects.
+```dart
+void main() {
+  CounterCubit cubit = CounterCubit();
+  test("Counter Cubit Test", () {
+    cubit.add();
+    expect(cubit.counter, 1);
+    cubit.subtract();
+    expect(cubit.counter, 0);
+  });
+}
 ```
+we can run the test and receive the following result:
+```zsh
+flutter test test/test.dart
+00:01 +1: All tests passed!     
+```
+
+### Simulate fail
+If we change our test to:
+```dart
+void main() {
+  CounterCubit cubit = CounterCubit();
+  test("Counter Cubit Test", () {
+    cubit.add();
+    expect(cubit.counter, 1);
+    cubit.subtract();
+    expect(cubit.counter, 1);
+  });
+}
+```
+There the second expect would result in error, we get the following result:
+
+
 
 
 ### Setting up your environment before the lecture

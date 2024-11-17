@@ -50,7 +50,7 @@ The content in this repo follows the CSEN268 Fall24 Lecture at Santa Clara Unive
 - [Lecture 16 - 05](https://github.com/mehmetartun/CSEN268-F24/tree/L16.05) Implement Google Sign In
 - [Lecture 16 - 06](https://github.com/mehmetartun/CSEN268-F24/tree/L16.06) Implement Apple Sign In
 - [Lecture 17 - 00](https://github.com/mehmetartun/CSEN268-F24/tree/L17.00) Start of Testing - Add dependencies, cleanup
-
+- [Lecture 17 - 01](https://github.com/mehmetartun/CSEN268-F24/tree/L17.01) Testing a Cubit
 
 
 
