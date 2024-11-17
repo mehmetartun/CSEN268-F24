@@ -52,7 +52,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '940129645525',
     projectId: 'fir-messaging-8b691',
     authDomain: 'fir-messaging-8b691.firebaseapp.com',
-    storageBucket: 'fir-messaging-8b691.appspot.com',
+    storageBucket: 'fir-messaging-8b691.firebasestorage.app',
+    measurementId: 'G-NKWSPG3EQ7',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
@@ -60,7 +61,7 @@ class DefaultFirebaseOptions {
     appId: '1:940129645525:android:5114240a14dd8daec6035c',
     messagingSenderId: '940129645525',
     projectId: 'fir-messaging-8b691',
-    storageBucket: 'fir-messaging-8b691.appspot.com',
+    storageBucket: 'fir-messaging-8b691.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -68,7 +69,10 @@ class DefaultFirebaseOptions {
     appId: '1:940129645525:ios:f881e9dd13e1c59ec6035c',
     messagingSenderId: '940129645525',
     projectId: 'fir-messaging-8b691',
-    storageBucket: 'fir-messaging-8b691.appspot.com',
+    storageBucket: 'fir-messaging-8b691.firebasestorage.app',
+    androidClientId: '940129645525-edi0n096njdlo515camt20n2jcdkurru.apps.googleusercontent.com',
+    iosClientId: '940129645525-gfcgqj6bcatb74el8odas789q0jq9t52.apps.googleusercontent.com',
     iosBundleId: 'com.artun.fmdemo',
   );
+
 }
