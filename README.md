@@ -6,154 +6,52 @@
 ## Lecture 17 - Testing
 In this lecture we will explore testing of widgets and the app in general
 
-### Step 03 - Fixing an Error in a Complex Widget Test
-In the previous step we saw that the following test failed:
+### Step 04 - Testing Scrolling
+In this case we shall build a user list and ensure that we have a list that we can scroll and tap.
+
+To do this we start by creating a page with a `ListView` and create 10 mock users. In our [widget_test.dart](/test/widget_test.dart) file we first create a `ListView`:
 ```dart
-    await tester.pumpWidget(createWidget(
-      UserListTile(
+  Widget createUserList() {
+    return ListView(
+        children: List.generate(20, (index) {
+      return UserListTile(
           user: User(
-        firstName: "John",
-        lastName: "",
-        email: "john@doe.com",
-        imageUrl: "https://placehold.co/500x500",
-        uid: "1234567890",
-      )),
-    ));
-    expect(find.text('John'), findsOneWidget);
-    expect(find.text('J'), findsOneWidget);
-    expect(find.text('john@doe.com'), findsOneWidget);
-```
-because the **last name** was empty string.
-
-To fix this we implement the following in the `UserAvatar` in [user_avatar.dart](/lib/widgets/user_avatar.dart):
-```dart
-  Widget build(BuildContext context) {
-    String initials = "";
-    if (user.firstName.isNotEmpty) {
-      initials += user.firstName[0].toUpperCase();
-    }
-    if (user.lastName.isNotEmpty) {
-      initials += user.lastName[0].toUpperCase();
-    }
-    if (initials == "") {
-      initials = "-";
-    }
-
-    return CircleAvatar(
-      child: Text(
-        initials,
-      ),
-    );
+              firstName: "First$index",
+              lastName: "Last$index",
+              imageUrl: "https://placehold.co/400x400",
+              email: "first$index@last$index.com",
+              uid: "$index"));
+    }));
   }
 ```
-When we now try running our test we get an error again:
-```zsh
-This was caught by the test expectation on the following line:
-  file:///Users/mehmetartun/Development/csen268/CSEN268-F24/test/widget_test.dart line 45
-The test description was:
-  UserListTile Widget Test
-════════════════════════════════════════════════════════════════════════════════════════════════════
-00:01 +0 -1: UserListTile Widget Test [E]                                                                         
-  Test failed. See exception logs above.
-  The test description was: UserListTile Widget Test
-  
+which then gets injected into `createWidget` as child. The call to the tester is to expect a `ListView`. 
 
-To run this test again: /Users/mehmetartun/Utilities/flutter/bin/cache/dart-sdk/bin/dart test /Users/mehmetartun/Development/csen268/CSEN268-F24/test/widget_test.dart -p vm --plain-name 'UserListTile Widget Test'
-00:01 +0 -1: Some tests failed.    
-```
-This time it's not matching the expectation `"John"` as the display name. That's because there is a `space` character that gets printed in:
+#### Checking ListView and the first item
 ```dart
-    return ListTile(
-      leading: UserAvatar(user: user),
-      // The style of the text will be taken from the ListTileTheme
-      title: Text('${user.firstName} ${user.lastName}'),
-      subtitle: Text(user.email),
-    );
+    expect(find.byType(ListView), findsOne);
 ```
-We can cover this case by modifying the definition of the `UserListTile` [user_list_tile.dart](/lib/widgets/user_list_tile.dart):
+will pass. 
+
+Similary checking if "First0 Last0" exists – corresponding to the first user on the list – will be done:
 ```dart
-  Widget build(BuildContext context) {
-    String displayName = '${user.firstName} ${user.lastName}';
-    displayName = displayName.trim();
-    if (displayName.isEmpty) {
-      displayName = "-";
-    }
-    return ListTile(
-      leading: UserAvatar(user: user),
-      title: Text(displayName),
-      subtitle: Text(user.email),
-    );
-  }
+    expect(find.text("First0 Last0"), findsOne);
 ```
-This means we can now write test cases for the following cases:
+We can see that both these will pass.
 
-
-| firstName | lastName | initials  | displayName |
-| :-:|:-:|:-:|:-:|
-| input | input | expect | expect |
-|  `"John"` | `"Doe"` | `"JD"` | `"John Doe"` |
-|  `"John"` | `""` | `"J"` | `"John"` |
-|  `""` | `"Doe"` | `"D"` | `"Doe"` |
-|  `""` | `""` | `"-"` | `"-"` |
-
-We now have a complete test coverage:
+#### Checking the Scroll Behaviour
+To check the scroll behaviour we use  `tester.fling()` method. 
 ```dart
-    await tester.pumpWidget(createWidget(
-      UserListTile(
-          user: User(
-        firstName: "John",
-        lastName: "Doe",
-        email: "john@doe.com",
-        imageUrl: "https://placehold.co/500x500",
-        uid: "1234567890",
-      )),
-    ));
-    expect(find.text('John Doe'), findsOneWidget);
-    expect(find.text('JD'), findsOneWidget);
-    expect(find.text('john@doe.com'), findsOneWidget);
-    await tester.pumpWidget(createWidget(
-      UserListTile(
-          user: User(
-        firstName: "John",
-        lastName: "",
-        email: "john@doe.com",
-        imageUrl: "https://placehold.co/500x500",
-        uid: "1234567890",
-      )),
-    ));
-    expect(find.text('John'), findsOneWidget);
-    expect(find.text('J'), findsOneWidget);
-    expect(find.text('john@doe.com'), findsOneWidget);
-    await tester.pumpWidget(createWidget(
-      UserListTile(
-          user: User(
-        firstName: "",
-        lastName: "Doe",
-        email: "john@doe.com",
-        imageUrl: "https://placehold.co/500x500",
-        uid: "1234567890",
-      )),
-    ));
-    expect(find.text('Doe'), findsOneWidget);
-    expect(find.text('D'), findsOneWidget);
-    expect(find.text('john@doe.com'), findsOneWidget);
-    await tester.pumpWidget(createWidget(
-      UserListTile(
-          user: User(
-        firstName: "",
-        lastName: "",
-        email: "john@doe.com",
-        imageUrl: "https://placehold.co/500x500",
-        uid: "1234567890",
-      )),
-    ));
-    expect(find.text('-'), findsExactly(2));
-    expect(find.text('john@doe.com'), findsOneWidget);
+    ...
+    await tester.fling(find.byType(ListView), Offset(0, -200), 400);
+    await tester.pumpAndSettle();
+    expect(find.text("First0 Last0"), findsNothing);
+    ...
 ```
-Where we used `findsExactly(2)` which means that both in the avatar and in the 
-displayName we will get a `-` that means we need to get exactly two of these to pass the test.
+This means that we would scroll past the first item in the list and we would not find any text that matches this. Note that the origin on the screen is the upper left hand corner and an offset of (0,-200) means scroll down by 200 pixels. This passes as well.
 
+Using `flutter run` instead of `flutter test` we can see this playing out on the simulator as seen in this video:
 
+![Scroll Test](/assets/images/Testing%20Scroll%20Behaviour.gif)
 
 ### Setting up your environment before the lecture
 
