@@ -45,5 +45,30 @@ void main() {
     expect(find.text('John'), findsOneWidget);
     expect(find.text('J'), findsOneWidget);
     expect(find.text('john@doe.com'), findsOneWidget);
+    await tester.pumpWidget(createWidget(
+      UserListTile(
+          user: User(
+        firstName: "",
+        lastName: "Doe",
+        email: "john@doe.com",
+        imageUrl: "https://placehold.co/500x500",
+        uid: "1234567890",
+      )),
+    ));
+    expect(find.text('Doe'), findsOneWidget);
+    expect(find.text('D'), findsOneWidget);
+    expect(find.text('john@doe.com'), findsOneWidget);
+    await tester.pumpWidget(createWidget(
+      UserListTile(
+          user: User(
+        firstName: "",
+        lastName: "",
+        email: "john@doe.com",
+        imageUrl: "https://placehold.co/500x500",
+        uid: "1234567890",
+      )),
+    ));
+    expect(find.text('-'), findsExactly(2));
+    expect(find.text('john@doe.com'), findsOneWidget);
   });
 }

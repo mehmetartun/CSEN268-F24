@@ -6,44 +6,8 @@
 ## Lecture 17 - Testing
 In this lecture we will explore testing of widgets and the app in general
 
-### Step 02 - Testing a Complex Widget
-In this case let's create a complex widget and test it's behavior.
-
-Widgets that we create standalone need a `MaterialApp` to create the widget tree:
-```dart
-  Widget createWidget(Widget child) {
-    return MaterialApp(home: Scaffold(body: child));
-  }
-```
-is a simple wrapper for the individual widget that we are testing.
-
-Let's look at `UserListTile` which displays the user's display name (first name and last name combined) as well as their email and initials in the avatar.
-Our test is then defined as:
-```dart
-  testWidgets('UserListTile Widget Test', (WidgetTester tester) async {
-    await tester.pumpWidget(createWidget(
-      UserListTile(
-          user: User(
-        firstName: "John",
-        lastName: "Doe",
-        email: "john@doe.com",
-        imageUrl: "https://placehold.co/500x500",
-        uid: "1234567890",
-      )),
-    ));
-    expect(find.text('John Doe'), findsOneWidget);
-    expect(find.text('JD'), findsOneWidget);
-    expect(find.text('john@doe.com'), findsOneWidget);
-  });
-```
-and running the test we see that:
-```zsh
-flutter test test/widget_test.dart
-00:01 +1: All tests passed!             
-```
-
-### Adding cases to your test suite
-Let's add a few test cases to ensure that the widget can handle it. For that, let's pass a last name that's empty:
+### Step 03 - Fixing an Error in a Complex Widget Test
+In the previous step we saw that the following test failed:
 ```dart
     await tester.pumpWidget(createWidget(
       UserListTile(
@@ -59,33 +23,136 @@ Let's add a few test cases to ensure that the widget can handle it. For that, le
     expect(find.text('J'), findsOneWidget);
     expect(find.text('john@doe.com'), findsOneWidget);
 ```
-In this case we would expect the display name to be **John** and the initials to just show **J**. Let's run this and see what we get:
-```zsh
-══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
-The following message was thrown:
-Multiple exceptions (4) were detected during the running of the current test, and at least one was
-unexpected.
-════════════════════════════════════════════════════════════════════════════════════════════════════
-```
-We get a few errors. When investigating the output above we note that:
-```zsh
-══╡ EXCEPTION CAUGHT BY WIDGETS LIBRARY ╞═══════════════════════════════════════════════════════════
-The following RangeError was thrown building UserAvatar:
-RangeError (index): Invalid value: Valid value range is empty: 0
+because the **last name** was empty string.
 
-The relevant error-causing widget was:
-  UserAvatar
-  UserAvatar:file:///Users/mehmetartun/Development/csen268/CSEN268-F24/lib/widgets/user_list_tile.dart:13:16
-```
-This is because our `UserAvatar` doesn't expect strings shorter than 1 for the first name and last name. From [user_avatar.dart](/lib/widgets/user_avatar.dart) we see that it references the first character:
+To fix this we implement the following in the `UserAvatar` in [user_avatar.dart](/lib/widgets/user_avatar.dart):
 ```dart
+  Widget build(BuildContext context) {
+    String initials = "";
+    if (user.firstName.isNotEmpty) {
+      initials += user.firstName[0].toUpperCase();
+    }
+    if (user.lastName.isNotEmpty) {
+      initials += user.lastName[0].toUpperCase();
+    }
+    if (initials == "") {
+      initials = "-";
+    }
+
     return CircleAvatar(
       child: Text(
-        '${user.firstName[0].toUpperCase()}${user.lastName[0].toUpperCase()}',
+        initials,
       ),
     );
+  }
 ```
-Now with the help of the test result we can rectify this in the next step.
+When we now try running our test we get an error again:
+```zsh
+This was caught by the test expectation on the following line:
+  file:///Users/mehmetartun/Development/csen268/CSEN268-F24/test/widget_test.dart line 45
+The test description was:
+  UserListTile Widget Test
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +0 -1: UserListTile Widget Test [E]                                                                         
+  Test failed. See exception logs above.
+  The test description was: UserListTile Widget Test
+  
+
+To run this test again: /Users/mehmetartun/Utilities/flutter/bin/cache/dart-sdk/bin/dart test /Users/mehmetartun/Development/csen268/CSEN268-F24/test/widget_test.dart -p vm --plain-name 'UserListTile Widget Test'
+00:01 +0 -1: Some tests failed.    
+```
+This time it's not matching the expectation `"John"` as the display name. That's because there is a `space` character that gets printed in:
+```dart
+    return ListTile(
+      leading: UserAvatar(user: user),
+      // The style of the text will be taken from the ListTileTheme
+      title: Text('${user.firstName} ${user.lastName}'),
+      subtitle: Text(user.email),
+    );
+```
+We can cover this case by modifying the definition of the `UserListTile` [user_list_tile.dart](/lib/widgets/user_list_tile.dart):
+```dart
+  Widget build(BuildContext context) {
+    String displayName = '${user.firstName} ${user.lastName}';
+    displayName = displayName.trim();
+    if (displayName.isEmpty) {
+      displayName = "-";
+    }
+    return ListTile(
+      leading: UserAvatar(user: user),
+      title: Text(displayName),
+      subtitle: Text(user.email),
+    );
+  }
+```
+This means we can now write test cases for the following cases:
+
+| input | input | expect | expect |
+| firstName | lastName | initials  | displayName |
+| :-:|:-:|:-:|:-:|
+|  `"John"` | `"Doe"` | `"JD"` | `"John Doe"` |
+|  `"John"` | `""` | `"J"` | `"John"` |
+|  `""` | `"Doe"` | `"D"` | `"Doe"` |
+|  `""` | `""` | `"-"` | `"-"` |
+
+We now have a complete test coverage:
+```dart
+    await tester.pumpWidget(createWidget(
+      UserListTile(
+          user: User(
+        firstName: "John",
+        lastName: "Doe",
+        email: "john@doe.com",
+        imageUrl: "https://placehold.co/500x500",
+        uid: "1234567890",
+      )),
+    ));
+    expect(find.text('John Doe'), findsOneWidget);
+    expect(find.text('JD'), findsOneWidget);
+    expect(find.text('john@doe.com'), findsOneWidget);
+    await tester.pumpWidget(createWidget(
+      UserListTile(
+          user: User(
+        firstName: "John",
+        lastName: "",
+        email: "john@doe.com",
+        imageUrl: "https://placehold.co/500x500",
+        uid: "1234567890",
+      )),
+    ));
+    expect(find.text('John'), findsOneWidget);
+    expect(find.text('J'), findsOneWidget);
+    expect(find.text('john@doe.com'), findsOneWidget);
+    await tester.pumpWidget(createWidget(
+      UserListTile(
+          user: User(
+        firstName: "",
+        lastName: "Doe",
+        email: "john@doe.com",
+        imageUrl: "https://placehold.co/500x500",
+        uid: "1234567890",
+      )),
+    ));
+    expect(find.text('Doe'), findsOneWidget);
+    expect(find.text('D'), findsOneWidget);
+    expect(find.text('john@doe.com'), findsOneWidget);
+    await tester.pumpWidget(createWidget(
+      UserListTile(
+          user: User(
+        firstName: "",
+        lastName: "",
+        email: "john@doe.com",
+        imageUrl: "https://placehold.co/500x500",
+        uid: "1234567890",
+      )),
+    ));
+    expect(find.text('-'), findsExactly(2));
+    expect(find.text('john@doe.com'), findsOneWidget);
+```
+Where we used `findsExactly(2)` which means that both in the avatar and in the 
+displayName we will get a `-` that means we need to get exactly two of these to pass the test.
+
+
 
 ### Setting up your environment before the lecture
 
