@@ -9,6 +9,7 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "debug",
+            "program": "lib/main.dart"
         },
         {
             "name": "CSEN268-F24 (profile mode)",

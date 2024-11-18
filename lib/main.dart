@@ -1,4 +1,5 @@
 import 'package:CSEN268_F24/firebase_options.dart';
+import 'package:CSEN268_F24/pages/firestore_test_page.dart';
 import 'package:CSEN268_F24/pages/generic_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: GenericPage(title: "Testing Start"),
+      home: FirestoreTestPage(),
     );
   }
 }
