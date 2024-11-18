@@ -9,10 +9,14 @@ class UserListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String displayName = '${user.firstName} ${user.lastName}';
+    displayName = displayName.trim();
+    if (displayName.isEmpty) {
+      displayName = "-";
+    }
     return ListTile(
       leading: UserAvatar(user: user),
-      // The style of the text will be taken from the ListTileTheme
-      title: Text('${user.firstName} ${user.lastName}'),
+      title: Text(displayName),
       subtitle: Text(user.email),
     );
   }

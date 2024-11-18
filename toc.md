@@ -52,6 +52,7 @@ The content in this repo follows the CSEN268 Fall24 Lecture at Santa Clara Unive
 - [Lecture 17 - 00](https://github.com/mehmetartun/CSEN268-F24/tree/L17.00) Start of Testing - Add dependencies, cleanup
 - [Lecture 17 - 01](https://github.com/mehmetartun/CSEN268-F24/tree/L17.01) Testing a Cubit
 - [Lecture 17 - 02](https://github.com/mehmetartun/CSEN268-F24/tree/L17.02) Testing a Complex Widget
+- [Lecture 17 - 03](https://github.com/mehmetartun/CSEN268-F24/tree/L17.03) Building test coverage of complex widget
 
 
 
