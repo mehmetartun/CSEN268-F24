@@ -53,6 +53,7 @@ The content in this repo follows the CSEN268 Fall24 Lecture at Santa Clara Unive
 - [Lecture 17 - 01](https://github.com/mehmetartun/CSEN268-F24/tree/L17.01) Testing a Cubit
 - [Lecture 17 - 02](https://github.com/mehmetartun/CSEN268-F24/tree/L17.02) Testing a Complex Widget
 - [Lecture 17 - 03](https://github.com/mehmetartun/CSEN268-F24/tree/L17.03) Building test coverage of complex widget
+- [Lecture 17 - 04](https://github.com/mehmetartun/CSEN268-F24/tree/L17.04) Testing scroll behaviour
 
 
 

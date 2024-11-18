@@ -18,6 +18,19 @@ void main() {
     return MaterialApp(home: Scaffold(body: child));
   }
 
+  Widget createUserList() {
+    return ListView(
+        children: List.generate(20, (index) {
+      return UserListTile(
+          user: User(
+              firstName: "First$index",
+              lastName: "Last$index",
+              imageUrl: "https://placehold.co/400x400",
+              email: "first$index@last$index.com",
+              uid: "$index"));
+    }));
+  }
+
   testWidgets('UserListTile Widget Test', (WidgetTester tester) async {
     await tester.pumpWidget(createWidget(
       UserListTile(
@@ -70,5 +83,15 @@ void main() {
     ));
     expect(find.text('-'), findsExactly(2));
     expect(find.text('john@doe.com'), findsOneWidget);
+  });
+
+  testWidgets('ListView', (tester) async {
+    await tester.pumpWidget(createWidget(createUserList()));
+    await tester.pumpAndSettle();
+    expect(find.byType(ListView), findsOne);
+    expect(find.text("First0 Last0"), findsOne);
+    await tester.fling(find.byType(ListView), Offset(0, -200), 400);
+    await tester.pumpAndSettle();
+    expect(find.text("First0 Last0"), findsNothing);
   });
 }
