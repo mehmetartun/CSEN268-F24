@@ -87,9 +87,10 @@ We can cover this case by modifying the definition of the `UserListTile` [user_l
 ```
 This means we can now write test cases for the following cases:
 
-| input | input | expect | expect |
+
 | firstName | lastName | initials  | displayName |
 | :-:|:-:|:-:|:-:|
+| input | input | expect | expect |
 |  `"John"` | `"Doe"` | `"JD"` | `"John Doe"` |
 |  `"John"` | `""` | `"J"` | `"John"` |
 |  `""` | `"Doe"` | `"D"` | `"Doe"` |
