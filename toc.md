@@ -55,6 +55,7 @@ The content in this repo follows the CSEN268 Fall24 Lecture at Santa Clara Unive
 - [Lecture 17 - 03](https://github.com/mehmetartun/CSEN268-F24/tree/L17.03) Building test coverage of complex widget
 - [Lecture 17 - 04](https://github.com/mehmetartun/CSEN268-F24/tree/L17.04) Testing scroll behaviour
 - [Lecture 17 - 05](https://github.com/mehmetartun/CSEN268-F24/tree/L17.05) Testing tap behaviour
+- [Lecture 17 - 06](https://github.com/mehmetartun/CSEN268-F24/tree/L17.06) Integration Test
 
 
 
