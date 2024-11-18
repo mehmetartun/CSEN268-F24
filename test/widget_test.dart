@@ -93,5 +93,11 @@ void main() {
     await tester.fling(find.byType(ListView), Offset(0, -200), 400);
     await tester.pumpAndSettle();
     expect(find.text("First0 Last0"), findsNothing);
+    await tester.fling(find.byType(ListView), Offset(0, 200), 400);
+    await tester.pumpAndSettle();
+    expect(find.text("First0 Last0"), findsOne);
+    await tester.tap(find.byType(UserListTile).first);
+    await tester.pumpAndSettle();
+    expect(find.text('First0 Last0 added.'), findsOne);
   });
 }
