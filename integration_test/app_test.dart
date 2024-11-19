@@ -11,7 +11,7 @@ void main() async {
   );
 
   group('Testing MyApp', () {
-    testWidgets('Button Test', (tester) async {
+    testWidgets('Firestore Test', (tester) async {
       await tester.pumpWidget(const MyApp());
       await tester.pumpAndSettle(Duration(milliseconds: 3000));
       // expect(find.text('Testing Start'), findsOne);
