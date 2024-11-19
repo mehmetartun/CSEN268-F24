@@ -11,7 +11,7 @@ For integration testing we create a directory called [integration_test](/integra
 ```dart
 void main() {
   group('Testing MyApp', () {
-    testWidgets('Button Test', (tester) async {
+    testWidgets('Firestore Test', (tester) async {
       await tester.pumpWidget(const MyApp());
       expect(find.text('Testing Start'), findsOne);
     });
