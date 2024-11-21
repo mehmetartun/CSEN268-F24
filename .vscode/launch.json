@@ -22,6 +22,27 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
+        },
+        {
+            "name": "Admin CSEN268-F24",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "program": "lib/main_admin.dart"
+        },
+        {
+            "name": "Admin CSEN268-F24 (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile",
+            "program": "lib/main_admin.dart"
+        },
+        {
+            "name": "Admin CSEN268-F24 (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "program": "lib/main_admin.dart"
         }
     ]
 }
