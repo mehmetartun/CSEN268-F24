@@ -41,18 +41,38 @@
       ]
     }
   ],
-  "hosting": {
-    "public": "build/web",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  }
+  "hosting": [
+    {
+      "target": "clientApp",
+      "public": "build/web",
+      "appAssociation": "AUTO",
+      "headers": [
+        {
+          "source": "**/*.@(jpg|jpeg|gif|png|eot|otf|ttf|ttc|woff|font.css)",
+          "headers": [
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "target": "adminApp",
+      "public": "build/web_admin",
+      "appAssociation": "AUTO",
+      "headers": [
+        {
+          "source": "**/*.@(jpg|jpeg|gif|png|eot|otf|ttf|ttc|woff|font.css)",
+          "headers": [
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            }
+          ]
+        }
+      ]
+    }
+ ]
 }

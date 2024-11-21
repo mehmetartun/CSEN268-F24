@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "fir-messaging-8b691"
+  },
+  "targets": {
+    "fir-messaging-8b691": {
+      "hosting": {
+        "clientApp": [
+          "fir-messaging-8b691"
+        ],
+        "adminApp": [
+          "fir-messaging-8b691-admin"
+        ]
+      }
+    }
   }
 }
