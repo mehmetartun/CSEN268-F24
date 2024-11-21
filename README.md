@@ -114,6 +114,9 @@ Project Console: https://console.firebase.google.com/project/fir-messaging-8b691
 Hosting URL: https://fir-messaging-8b691.web.app
 ```
 
+#### Accessing the Web App
+The web app will be located at [fir-messaging-8b691.web.app](https://fir-messaging-8b691.web.app/)
+
 ### Setting up your environment before the lecture
 
 Each lecture is stored under a separate tag. On your computer do the following
