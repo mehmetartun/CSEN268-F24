@@ -57,6 +57,7 @@ The content in this repo follows the CSEN268 Fall24 Lecture at Santa Clara Unive
 - [Lecture 17 - 05](https://github.com/mehmetartun/CSEN268-F24/tree/L17.05) Testing tap behaviour
 - [Lecture 17 - 06](https://github.com/mehmetartun/CSEN268-F24/tree/L17.06) Integration Test
 - [Lecture 17 - 07](https://github.com/mehmetartun/CSEN268-F24/tree/L17.07) Apple App Store and Testflight
+- [Lecture 18 - 00](https://github.com/mehmetartun/CSEN268-F24/tree/L18.00) Deploying to Web
 
 
 
