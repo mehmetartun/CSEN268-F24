@@ -88,6 +88,77 @@ This function parses the string in the `TextFormField` to resolve to a web page.
 And on the page the `WebViewWidget` needs to be wrapped with a `Expanded` widget in order to specify that it can take any available space within the `Column` but not more. Otherwise as the `Column` will grow as much as necessary, the `WebViewWidget` will try to grow to infinity. `Expanded` bounds this which could be achieved with a `SizedBox` or a `Container`.
 
 
+#### InAppWebView
+Here the syntax of the WebView is slightly different. We create a new page called [in_app_web_view_page.dart](/lib/pages/in_app_web_view_page.dart):
+```dart
+class _InAppWebViewPageState extends State<InAppWebViewPage> {
+  GlobalKey<FormState> _formKey = GlobalKey();
+  late TextEditingController controller;
+  late InAppWebViewController webViewController;
+  Uri? uri;
+
+  @override
+  void initState() {
+    controller = TextEditingController(text: "google.com");
+    super.initState();
+  }
+
+  void processForm() {
+    if (controller.text == null) {
+      return;
+    }
+    if (controller.text.startsWith("https://") ||
+        controller.text.startsWith("http://")) {
+      uri = Uri.tryParse(controller.text);
+    } else {
+      uri = Uri.tryParse("https://${controller.text}");
+    }
+    if (webViewController != null && uri != null) {
+      webViewController.loadUrl(
+          urlRequest: URLRequest(url: WebUri(uri.toString())));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("In App Web View"),
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Form(
+                key: _formKey,
+                child: TextFormField(
+                  controller: controller,
+                  decoration: InputDecoration(
+                      labelText: "Address",
+                      suffix: IconButton(
+                        icon: Icon(Icons.send),
+                        onPressed: () {
+                          processForm();
+                        },
+                      )),
+                ),
+              ),
+            ),
+            Expanded(
+              child: InAppWebView(
+                onWebViewCreated: (controller) async {
+                  webViewController = controller;
+                },
+              ),
+            ),
+          ],
+        ));
+  }
+}
+```
+Here the controller is created together with the WebView and a handle is passed on. You don't need to `dispose()` this `InAppWebViewController` as it self disposes when the WebViewWidget is disposed.
+
+
 ### Setting up your environment before the lecture
 
 Each lecture is stored under a separate tag. On your computer do the following
