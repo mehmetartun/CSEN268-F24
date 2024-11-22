@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class WebViewPage extends StatefulWidget {
-  const WebViewPage({super.key});
+class InAppWebViewPage extends StatefulWidget {
+  const InAppWebViewPage({super.key});
 
   @override
-  State<WebViewPage> createState() => _WebViewPageState();
+  State<InAppWebViewPage> createState() => _InAppWebViewPageState();
 }
 
-class _WebViewPageState extends State<WebViewPage> {
+class _InAppWebViewPageState extends State<InAppWebViewPage> {
   GlobalKey<FormState> _formKey = GlobalKey();
   late TextEditingController controller;
-  late WebViewController webViewController;
+  InAppWebViewController? webViewController;
   Uri? uri;
 
   @override
   void initState() {
     controller = TextEditingController(text: "google.com");
-    webViewController = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted);
     super.initState();
   }
 
@@ -32,8 +31,9 @@ class _WebViewPageState extends State<WebViewPage> {
     } else {
       uri = Uri.tryParse("https://${controller.text}");
     }
-    if (uri != null) {
-      webViewController.loadRequest(uri!);
+    if (webViewController != null && uri != null) {
+      webViewController!
+          .loadUrl(urlRequest: URLRequest(url: WebUri(uri.toString())));
     }
   }
 
@@ -41,7 +41,7 @@ class _WebViewPageState extends State<WebViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Web View"),
+          title: Text("In App Web View"),
         ),
         body: Column(
           children: [
@@ -63,8 +63,10 @@ class _WebViewPageState extends State<WebViewPage> {
               ),
             ),
             Expanded(
-              child: WebViewWidget(
-                controller: webViewController,
+              child: InAppWebView(
+                onWebViewCreated: (controller) async {
+                  webViewController = controller;
+                },
               ),
             ),
           ],
@@ -72,7 +74,7 @@ class _WebViewPageState extends State<WebViewPage> {
   }
 
   @override
-  void dispose() {
+  void dispose() async {
     controller.dispose();
     super.dispose();
   }
