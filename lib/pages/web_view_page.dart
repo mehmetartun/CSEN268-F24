@@ -18,7 +18,16 @@ class _WebViewPageState extends State<WebViewPage> {
   void initState() {
     controller = TextEditingController(text: "google.com");
     webViewController = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted);
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setNavigationDelegate(
+          NavigationDelegate(onNavigationRequest: (request) {
+        if (request.url.contains("youtube")) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("This destination is not allowed")));
+          return NavigationDecision.prevent;
+        }
+        return NavigationDecision.navigate;
+      }));
     super.initState();
   }
 

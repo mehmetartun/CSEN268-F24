@@ -61,6 +61,7 @@ The content in this repo follows the CSEN268 Fall24 Lecture at Santa Clara Unive
 - [Lecture 18 - 01](https://github.com/mehmetartun/CSEN268-F24/tree/L18.01) Setting Targets and Deploying Admin App
 - [Lecture 18 - 02](https://github.com/mehmetartun/CSEN268-F24/tree/L18.02) Implementing WebView
 - [Lecture 18 - 03](https://github.com/mehmetartun/CSEN268-F24/tree/L18.03) Implementing InAppWebView
+- [Lecture 18 - 04](https://github.com/mehmetartun/CSEN268-F24/tree/L18.04) Navigation Delegate
 
 
 
