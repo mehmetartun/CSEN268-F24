@@ -62,6 +62,11 @@ class SignInCubit extends Cubit<SignInState> {
     }
   }
 
+  void signOut() async {
+    await GoogleSignIn().signOut();
+    await FirebaseAuth.instance.signOut();
+  }
+
   Future<String?> appleSignIn() async {
     final appleProvider = AppleAuthProvider();
     if (kIsWeb) {

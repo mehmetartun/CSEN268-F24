@@ -9,7 +9,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // FirebaseAuth.instance.signOut();
+  FirebaseAuth.instance.signOut();
   // FirebaseFunctions.instance.useFunctionsEmulator("localhost", 5001);
   runApp(MyApp());
 }

@@ -1,0 +1,2 @@
+/Users/mehmetartun/Development/csen268/archive/CSEN268-F24/android/app/.cxx/Debug/5g2g3246/x86/CMakeFiles/edit_cache.dir
+/Users/mehmetartun/Development/csen268/archive/CSEN268-F24/android/app/.cxx/Debug/5g2g3246/x86/CMakeFiles/rebuild_cache.dir
